@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+		<bean id="oracleDS" class="org.apache.commons.dbcp2.BasicDataSource">
+		
+			<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+			<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+			<property name="username" value="admin"/>
+			<property name="password" value="1234"/>
+			
+		
+		</bean>
+
+
+
+
+
+
+		<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="oracleDS"/>
+			<property name="typeAliasesPackage" value="com.jgm.kyoto.domain"/>
+			<property name="mapperLocations" value="/WEB-INF/spring/mapper/*-mapper.xml"/>
+			<property name="configuration">
+			
+			
+				<bean class="org.apache.ibatis.session.Configuration">
+				
+					
+					<property name="cacheEnabled" value="true"/>
+					<property name="defaultExecutorType" value="REUSE"/>
+					<property name="jdbcTypeForNull" value="VARCHAR"/>
+					<property name="mapUnderscoreToCamelCase" value="false"/>
+					<property name="logPrefix" value="MYBATIS: "></property>
+				
+				
+				</bean>
+				
+				</property>
+				
+					</bean>
+			
+			<tx:annotation-driven/>
+			<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			
+				<property name="dataSource" ref="oracleDS"/>
+			
+			</bean>
+			
+			<mybatis-spring:scan base-package="com.jgm.kyoto.persistence"/>
+		
+		
+		
+	
+
+
+
+</beans>
