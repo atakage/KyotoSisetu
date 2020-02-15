@@ -87,7 +87,7 @@ public class KyotoService {
 
 
 
-	private JSONObject strToJson(String resString) throws ParseException {
+	public JSONObject strToJson(String resString) throws ParseException {
 		// TODO Auto-generated method stub
 		JSONParser jParser = new JSONParser();
 		JSONObject jObject = (JSONObject) jParser.parse(resString);
@@ -102,7 +102,7 @@ public class KyotoService {
 
 
 
-	private String getKyotoString(String requestURL) {
+	public String getKyotoString(String requestURL) {
 		// TODO Auto-generated method stub
 		
 		try {
