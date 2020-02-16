@@ -454,15 +454,27 @@ td{
 <br>
 
 <div class="paginationBox">
-<a href="#">&laquo;</a>
-<a class="pagiActive" href="#">1</a>
-<a href="#">2</a>
-<a href="#">3</a>
-<a href="#">4</a>
-<a href="#">5</a>
-<a href="#">6</a>
-<a href="#">7</a>
-<a href="#">&raquo;</a>
+<a href="${rootPath}/?curPage=1">&laquo;</a>
+<c:if test="${curPage-3 >= 1}">
+<a href="${rootPath}/?curPage=${curPage-3}">${curPage-3}</a>
+</c:if>
+<c:if test="${curPage-2 >= 1}">
+<a href="${rootPath}/?curPage=${curPage-2}">${curPage-2}</a>
+</c:if>
+<c:if test="${curPage-1 >= 1}">
+<a href="${rootPath}/?curPage=${curPage-1}">${curPage-1}</a>
+</c:if>
+<a class="pagiActive" href="${rootPath}/?curPage=${curPage}">${curPage}</a>
+<c:if test="${curPage+1 <= endPage}">
+<a href="${rootPath}/?curPage=${curPage+1}">${curPage+1}</a>
+</c:if>
+<c:if test="${curPage+2 <= endPage}">
+<a href="${rootPath}/?curPage=${curPage+2}">${curPage+2}</a>
+</c:if>
+<c:if test="${curPage+3 <= endPage}">
+<a href="${rootPath}/?curPage=${curPage+3}">${curPage+3}</a>
+</c:if>
+<a href="${rootPath}/?curPage=${endPage}">&raquo;</a>
 </div>
 
 
@@ -474,6 +486,56 @@ td{
 
 
 <script>
+
+
+
+
+$(function(){
+
+
+
+
+	var span = $('.imgModalClose')
+	var imgModal = $('#imgModal');
+
+	span.click(function(){
+
+		imgModal.css('display', 'none')
+		
+		})
+
+	
+
+	$('.imgTd').click(function(){
+
+			
+
+			
+			var imgTd = $(this);
+			var image = $(this).find('.image');
+			var imgModalContent = $('#imgModalContent')
+			var imgModalCaption = $('#imgModalCaption')
+
+			imgModal.css('display', 'block')
+			imgModalContent.attr('src', image.attr('src')) 
+			imgModalCaption.html(image.attr('alt'))
+
+			
+		})
+
+
+
+	
+
+	
+})
+
+
+
+
+
+
+/*
  var imgModal = document.getElementById('imgModal');
  var imgTd = document.getElementById("imgTd");
  var image = document.getElementById('image');
@@ -483,6 +545,10 @@ td{
  
  imgTd.onclick = function(){
 
+
+	 var image = document.getElementById('image');
+	 
+	 
 
 	 imgModal.style.display = 'block';
 	 imgModalContent.src = image.src;
@@ -499,6 +565,8 @@ td{
 	 imgModal.style.display = 'none';	
 	 
 	 }
+
+		 */
 </script>
 
 

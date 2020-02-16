@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import com.google.gson.JsonElement;
+import com.jgm.kyoto.domain.PaginationVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +30,37 @@ public class KyotoService {
 	
 	
 	
+	
+	public JSONArray getPageList(PaginationVO pVO) throws ParseException {
+		// TODO Auto-generated method stub
+		
+		int offsetVal = pVO.getStartIndex();
+		//log.debug("스타트페지"+offsetVal);
+		//int limitVal = pVO.getPageSize()*pVO.getCurPage();
+		
+		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
+				+ "&offset="+offsetVal
+				+ "&limit=10"
+				+ "&fields=id,name,department,address,pic";
+		
+		log.debug("쿼리"+requestURL);
+		
+		String resString	= this.getKyotoString(requestURL);
+		 JSONObject resObject = this.strToJson(resString);
+		 JSONArray resArray = this.getInnerArray(resObject);
+		 
+		 
+		 
+		
+		 return resArray;
+		
+	}
+	
+	
+	
+	
+	
+	// test
 	public JSONArray getList() throws ParseException {
 		
 		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
@@ -165,5 +197,10 @@ public class KyotoService {
 		
 		
 	}
+
+
+
+
+	
 	
 }

@@ -33,11 +33,19 @@ public class HomeController {
 		
 		int allPostCnt =  pnService.getAllPostCnt();
 		
+		
+		
 		PaginationVO pVO = pnService.getPerfectPagination(allPostCnt, curPage);
 		
-		JSONArray resArray = ktService.getList();
+		JSONArray resArray = ktService.getPageList(pVO);
 		
 		
+		
+		
+		
+		model.addAttribute("curPage", pVO.getCurPage());
+		model.addAttribute("startPage", pVO.getStartPage());
+		model.addAttribute("endPage", pVO.getAllPageCnt());
 		model.addAttribute("KYOTOLIST", resArray);
 		
 		

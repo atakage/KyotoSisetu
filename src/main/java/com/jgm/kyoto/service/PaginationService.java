@@ -1,8 +1,15 @@
 package com.jgm.kyoto.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLEncoder;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.jgm.kyoto.domain.PaginationVO;
 
@@ -15,7 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 public class PaginationService {
 	
 	private final KyotoService ktService;
-	private final PaginationVO pVO;
+	
+	
+	PaginationVO pVO = new PaginationVO();
+	
 	
 	private String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?";
 	
@@ -74,7 +84,7 @@ public class PaginationService {
 		// for SQLquery
 		this.startIndexSetting(curPage);
 		
-		return null;
+		return pVO;
 	}
 
 
@@ -115,7 +125,7 @@ public class PaginationService {
 	private int getRangeCnt(int allPageCnt) {
 		// TODO Auto-generated method stub
 		
-		PaginationVO pVO = new PaginationVO();
+		//pVO = new PaginationVO();
 		
 		// ceil : 小数点以下切り上げ？？
 		return (int)Math.ceil(allPageCnt*1.0/pVO.getRangeSize());
@@ -125,10 +135,49 @@ public class PaginationService {
 	private int getPageCnt(int allPostCnt) {
 		// TODO Auto-generated method stub
 		
-		PaginationVO pVO = new PaginationVO();
+		//pVO = new PaginationVO();
 		
 		// ceil : 小数点以下切り上げ？？
 		return (int)Math.ceil(allPostCnt*1.0/pVO.getPageSize());
 	}
+
+
+	public int getAllSearchPostCnt(String searchVal) throws UnsupportedEncodingException, ParseException{
+		// TODO Auto-generated method stub
+		
+		
+		//検索valueに何も入力されなかった場合は全体結果return
+		if(searchVal.trim().isEmpty()) {
+
+			// TODO Auto-generated method stub
+			
+			return this.getAllPostCnt();
+			
+			
+		}
+		
+		String searchValEn = URLEncoder.encode(searchVal, "UTF-8");
+		
+		
+		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d&fields=name&filters[name]="+searchValEn;
+		
+		
+		
+		String resString = ktService.getKyotoString(requestURL);
+		JSONObject resObjectFix = ktService.strToJson(resString);
+		
+		// JSONObjectのなかlistの数だけを取り出し
+		int allSearchPostCnt = this.getInnerList(resObjectFix);
+		
+		
+		
+		
+		// TODO Auto-generated method stub
+		return allSearchPostCnt;
+		
+	}
+
+
+	
 
 }
