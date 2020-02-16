@@ -367,8 +367,8 @@ td{
 	
 	
 	
-	<input id="searchVal" class="inputClass" name="searchVal" maxlength="10" placeholder="施設名で探す（１０字以内）">
-	<button type="button" class="btn btn-primary" style="padding: 8px;">検索</button>
+	<input id="searchVal" class="inputClass" name="searchVal" maxlength="20" placeholder="施設名で探す（2０字以内）">
+	<button class="btn btn-primary" style="padding: 8px;">検索</button>
 	
 </div>
 </form>
@@ -454,6 +454,16 @@ td{
 <br>
 
 <div class="paginationBox">
+
+
+
+
+
+<c:choose>
+
+
+<c:when test="${PAGINATIONBAR == 'ALL'}">
+
 <a href="${rootPath}/?curPage=1">&laquo;</a>
 <c:if test="${curPage-3 >= 1}">
 <a href="${rootPath}/?curPage=${curPage-3}">${curPage-3}</a>
@@ -475,6 +485,38 @@ td{
 <a href="${rootPath}/?curPage=${curPage+3}">${curPage+3}</a>
 </c:if>
 <a href="${rootPath}/?curPage=${endPage}">&raquo;</a>
+
+</c:when>
+
+<c:otherwise>
+
+
+<a href="${rootPath}/kyoto/search?curPage=1&searchVal=${searchVal}">&laquo;</a>
+<c:if test="${curPage-3 >= 1}">
+<a href="${rootPath}/kyoto/search?curPage=${curPage-3}&searchVal=${searchVal}">${curPage-3}</a>
+</c:if>
+<c:if test="${curPage-2 >= 1}">
+<a href="${rootPath}/kyoto/search?curPage=${curPage-2}&searchVal=${searchVal}">${curPage-2}</a>
+</c:if>
+<c:if test="${curPage-1 >= 1}">
+<a href="${rootPath}/kyoto/search?curPage=${curPage-1}&searchVal=${searchVal}">${curPage-1}</a>
+</c:if>
+<a class="pagiActive" href="${rootPath}/kyoto/search?curPage=${curPage}&searchVal=${searchVal}">${curPage}</a>
+<c:if test="${curPage+1 <= endPage}">
+<a href="${rootPath}/kyoto/search?curPage=${curPage+1}&searchVal=${searchVal}">${curPage+1}</a>
+</c:if>
+<c:if test="${curPage+2 <= endPage}">
+<a href="${rootPath}/kyoto/search?curPage=${curPage+2}&searchVal=${searchVal}">${curPage+2}</a>
+</c:if>
+<c:if test="${curPage+3 <= endPage}">
+<a href="${rootPath}/kyoto/search?curPage=${curPage+3}&searchVal=${searchVal}">${curPage+3}</a>
+</c:if>
+<a href="${rootPath}/kyoto/search?curPage=${endPage}&searchVal=${searchVal}">&raquo;</a>
+
+</c:otherwise>
+</c:choose>
+
+
 </div>
 
 

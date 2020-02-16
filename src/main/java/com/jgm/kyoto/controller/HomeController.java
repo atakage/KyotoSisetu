@@ -1,5 +1,7 @@
 package com.jgm.kyoto.controller;
 
+import java.io.IOException;
+
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,7 @@ public class HomeController {
 	private final PaginationService pnService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(@RequestParam(required = false, defaultValue = "1", value="curPage")int curPage, Model model) throws ParseException {
+	public String home(@RequestParam(required = false, defaultValue = "1", value="curPage")int curPage, Model model) throws ParseException, IOException {
 		
 		
 		int allPostCnt =  pnService.getAllPostCnt();
@@ -40,13 +42,19 @@ public class HomeController {
 		JSONArray resArray = ktService.getPageList(pVO);
 		
 		
-		
+		log.debug("allList:"+resArray.toString());
 		
 		
 		model.addAttribute("curPage", pVO.getCurPage());
 		model.addAttribute("startPage", pVO.getStartPage());
 		model.addAttribute("endPage", pVO.getAllPageCnt());
 		model.addAttribute("KYOTOLIST", resArray);
+		
+		
+		//pagination boxが　オール用かサーチ用か判断
+		model.addAttribute("PAGINATIONBAR", "ALL");
+		
+		
 		
 		
 		

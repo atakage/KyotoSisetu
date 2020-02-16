@@ -1,5 +1,6 @@
 package com.jgm.kyoto.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,7 +31,7 @@ public class PaginationService {
 	private String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?";
 	
 
-	public int getAllPostCnt() throws ParseException {
+	public int getAllPostCnt() throws ParseException, IOException {
 		
 		
 		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d&fields=name";
@@ -86,6 +87,31 @@ public class PaginationService {
 		
 		return pVO;
 	}
+	
+	
+	
+	
+	
+	public PaginationVO getSearchPerfectPagination(int allSearchPostCnt, int curPage, String searchVal) {
+		// TODO Auto-generated method stub
+		
+		
+		pVO.setCurPage(curPage);
+		pVO.setAllPostCnt(allSearchPostCnt);
+		
+		
+		pVO.setAllPageCnt(this.getPageCnt(allSearchPostCnt));
+		pVO.setAllRangeCnt(this.getRangeCnt(pVO.getAllPageCnt()));
+		
+		//現在ブロック
+		this.rangeSetting(curPage);
+		
+		// for SQLquery
+		this.startIndexSetting(curPage);
+		
+		return pVO;
+	}
+	
 
 
 	private void startIndexSetting(int curPage) {
@@ -142,7 +168,7 @@ public class PaginationService {
 	}
 
 
-	public int getAllSearchPostCnt(String searchVal) throws UnsupportedEncodingException, ParseException{
+	public int getAllSearchPostCnt(String searchVal) throws ParseException, IOException{
 		// TODO Auto-generated method stub
 		
 		
@@ -176,6 +202,9 @@ public class PaginationService {
 		return allSearchPostCnt;
 		
 	}
+
+
+	
 
 
 	

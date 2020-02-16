@@ -31,7 +31,7 @@ public class KyotoService {
 	
 	
 	
-	public JSONArray getPageList(PaginationVO pVO) throws ParseException {
+	public JSONArray getPageList(PaginationVO pVO) throws ParseException, IOException {
 		// TODO Auto-generated method stub
 		
 		int offsetVal = pVO.getStartIndex();
@@ -43,9 +43,10 @@ public class KyotoService {
 				+ "&limit=10"
 				+ "&fields=id,name,department,address,pic";
 		
-		log.debug("쿼리"+requestURL);
+		
 		
 		String resString	= this.getKyotoString(requestURL);
+		
 		 JSONObject resObject = this.strToJson(resString);
 		 JSONArray resArray = this.getInnerArray(resObject);
 		 
@@ -59,8 +60,36 @@ public class KyotoService {
 	
 	
 	
+	// 検索用
+	public JSONArray getSearchPageList(PaginationVO pVO, String searchVal) throws ParseException, IOException {
+		// TODO Auto-generated method stub
+		
+		int offsetVal = pVO.getStartIndex();
+		
+		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
+				+ "&offset="+offsetVal
+				+ "&limit=10"
+				+ "&fields=id,name,department,address,pic"
+				+ "&filters[name]="+searchVal;
+		
+		
+		
+		
+		String resString	= this.getKyotoString(requestURL);
+		 JSONObject resObject = this.strToJson(resString);
+		 JSONArray resArray = this.getInnerArray(resObject);
+		 
+		 
+		 
+		
+		 return resArray;
+	}
 	
-	// test
+	
+	
+	
+	
+	/* test
 	public JSONArray getList() throws ParseException {
 		
 		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
@@ -80,7 +109,7 @@ public class KyotoService {
 	 
 	 
 	}
-
+*/
 
 
 
@@ -134,13 +163,15 @@ public class KyotoService {
 
 
 
-	public String getKyotoString(String requestURL) {
+	public String getKyotoString(String requestURL) throws IOException {
 		// TODO Auto-generated method stub
 		
-		try {
+		
 			
 			
 			URL url = new URL(requestURL);
+			
+			log.debug("uurrll:"+url.toString());
 			
 			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 			
@@ -149,14 +180,17 @@ public class KyotoService {
 			int resCode = httpConn.getResponseCode();
 			
 			
-			
+			 
 			
 			BufferedReader br = null;
 			
 			if(resCode == 200) {
 				
 				InputStreamReader isr = new InputStreamReader(httpConn.getInputStream());
+				
 				br = new BufferedReader(isr);
+				
+			
 				
 			}else {
 				
@@ -176,27 +210,33 @@ public class KyotoService {
 				
 			  reader = br.readLine();
 			  if(reader == null) break;
+			  
 			  resString.append(reader);
+			 
 			}
 			
 			
 			
 			
-			return resString.toString();
 			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
-		
+			
+			if(resCode == 200) {
+				return resString.toString();
+			}else {
+				
+				log.debug("resCodeError:"+resString.toString());
+			}
+			
+			
+		return null;
 		
 	}
+
+
+
+
+
+	
 
 
 
