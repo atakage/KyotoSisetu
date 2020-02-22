@@ -332,6 +332,26 @@ td{
 
 
 
+<script>
+
+$(function(){
+
+
+
+	$('.clickTdClass').click(function(){
+
+		var id = $(this).siblings('.hiddenId').val()
+
+
+		document.location.href="${rootPath}/kyoto/view?id="+id
+		
+		})
+	
+})
+
+
+</script>
+
 
 
 <head>
@@ -339,23 +359,13 @@ td{
 	<title>Home</title>
 </head>
 
-<header><img src="${rootPath}/resources/img/kyomon.gif" width="150" height="150"><div>京都市の公共施設</div></header>
+
 <body>
 
 
 
+<%@ include file = "/WEB-INF/views/include/include_header_nav.jsp"%>
 
-
-<div class="navMenuBox">
-
-<ul class="navMenu">
-	<li style="float:left;"><a href="${rootPath}/">一覧</a></li>
-	<li style="float:right;"><a href="#">会員登録</a></li>
-	<li style="float:right;"><a href="#">ログイン</a></li>
-	
-</ul>
-
-</div>
 
 
 <br><br><br><br>
@@ -404,10 +414,11 @@ td{
 			<c:forEach items="${KYOTOLIST}" var="kyoL">
 		<tr class="trClass">
 			
-			<td style="display:none;">${kyoL.id}</td>
-			<td>${kyoL.name}</td>
-			<td>${kyoL.department}</td>
-			<td>${kyoL.address}</td>
+			<input class="hiddenId" type="hidden" value="${kyoL.id}">
+			<td style="display:none;" >${kyoL.id}</td>
+			<td class="clickTdClass">${kyoL.name}</td>
+			<td class="clickTdClass">${kyoL.department}</td>
+			<td class="clickTdClass">${kyoL.address}</td>
 			
 			
 			<c:choose>
@@ -550,7 +561,8 @@ $(function(){
 
 	$('.imgTd').click(function(){
 
-			
+
+			var $imgSW = "on"
 
 			
 			var imgTd = $(this);

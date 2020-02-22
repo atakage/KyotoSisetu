@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import com.google.gson.JsonElement;
+import com.jgm.kyoto.domain.FacilityVO;
 import com.jgm.kyoto.domain.PaginationVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class KyotoService {
 
 	
-	private String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?";
+//	private String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?";
 	
 	
 	
@@ -35,10 +36,9 @@ public class KyotoService {
 		// TODO Auto-generated method stub
 		
 		int offsetVal = pVO.getStartIndex();
-		//log.debug("스타트페지"+offsetVal);
 		//int limitVal = pVO.getPageSize()*pVO.getCurPage();
 		
-		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
+		String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
 				+ "&offset="+offsetVal
 				+ "&limit=10"
 				+ "&fields=id,name,department,address,pic";
@@ -64,9 +64,23 @@ public class KyotoService {
 	public JSONArray getSearchPageList(PaginationVO pVO, String searchVal) throws ParseException, IOException {
 		// TODO Auto-generated method stub
 		
+		
+		if(searchVal.trim().isEmpty()) {
+
+			// TODO Auto-generated method stub
+			
+			return this.getPageList(pVO);
+			
+			
+		}
+		
+		
+		
+		
+		
 		int offsetVal = pVO.getStartIndex();
 		
-		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
+		String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
 				+ "&offset="+offsetVal
 				+ "&limit=10"
 				+ "&fields=id,name,department,address,pic"
@@ -230,6 +244,26 @@ public class KyotoService {
 			
 		return null;
 		
+	}
+
+
+
+
+	public JSONArray getDetail(String id) throws IOException, ParseException {
+		// TODO Auto-generated method stub
+		
+		String requestURL = "	https://data.city.kyoto.lg.jp/API/action/datastore/search.json?resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
+				+ "&fields=id,name,department,address,pic,note,tel,url,optime,holiday,fee"
+				+ "&filters[id]="+id;
+		
+		String resString	= this.getKyotoString(requestURL);
+		 JSONObject resObject = this.strToJson(resString);
+		 JSONArray resArray = this.getInnerArray(resObject);
+		 
+		 log.debug("resA:"+resArray);
+		
+		
+		return resArray;
 	}
 
 

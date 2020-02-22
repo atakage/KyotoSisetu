@@ -1,0 +1,19 @@
+
+tbl_user
+
+u_id varchar2(50) primary key
+u_password varchar(20) not null
+u_nickname varchar2(8) not null
+u_grade varchar2(1)  //   A(admin), U(user)
+
+
+
+tbl_comment
+
+u_id varchar2(50) primary key 
+c_number number(1000) not null // sequence
+c_f_id varchar2(20) not null    // 施設のid
+c_text varchar2(1000)
+
+CONSTRAINT fk_comment FOREIGN KEY(u_id) REFERENCES tbl_user(u_id) ON DELETE CASCADE
+

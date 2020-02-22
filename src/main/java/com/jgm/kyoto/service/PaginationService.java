@@ -28,13 +28,13 @@ public class PaginationService {
 	PaginationVO pVO = new PaginationVO();
 	
 	
-	private String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?";
+	//private String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?";
 	
 
 	public int getAllPostCnt() throws ParseException, IOException {
 		
 		
-		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d&fields=name";
+		String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d&fields=name";
 		
 	
 		String resString = ktService.getKyotoString(requestURL);
@@ -185,7 +185,7 @@ public class PaginationService {
 		String searchValEn = URLEncoder.encode(searchVal, "UTF-8");
 		
 		
-		requestURL += "resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d&fields=name&filters[name]="+searchValEn;
+		String requestURL = "https://data.city.kyoto.lg.jp/API/action/datastore/search.json?resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d&fields=name&filters[name]="+searchValEn;
 		
 		
 		

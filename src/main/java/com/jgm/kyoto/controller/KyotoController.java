@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jgm.kyoto.domain.FacilityVO;
 import com.jgm.kyoto.domain.PaginationVO;
 import com.jgm.kyoto.service.KyotoService;
 import com.jgm.kyoto.service.PaginationService;
@@ -49,6 +50,19 @@ public class KyotoController {
 
 		
 		return "home";
+	}
+	
+	
+	
+	@RequestMapping(value="/view", method=RequestMethod.GET)
+	public String view(@RequestParam("id") String id, Model model) throws IOException, ParseException {
+		
+		JSONArray resArray = ktService.getDetail(id);
+		
+		
+		model.addAttribute("FACILITY", resArray);
+		
+		return "view_page";
 	}
 
 }
