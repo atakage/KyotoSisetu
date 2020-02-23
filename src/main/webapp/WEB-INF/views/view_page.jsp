@@ -215,6 +215,31 @@
 
 
 }
+
+
+.commentLinear{
+
+	width: 100%;
+    height: 3px;
+    margin-top: 5%;
+    background-color: mediumpurple;
+    opacity: 0.4;
+
+}
+
+
+button {
+    color: #fff;
+    font-size: medium;
+    background-color: mediumpurple;
+    border-color: mediumpurple;
+    }
+
+button:hover {
+    color: #fff;
+    background-color: rgba(147, 112, 219, 0.5);
+	border-color:rgba(147, 112, 219, 0.5);
+	}
 </style>
 
 
@@ -303,8 +328,16 @@
 		<div class="commentBoxDetail">
 			
 			<div style="padding: 3%;">
+			
 			<div class="nicknameBox">nicknameさん</div><div class="dateBox" style="display: inline-block; float:right;">2020-02-02</div>
 			<div class="textBox" style="word-break:break-all; margin:10;">aewfaefaefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffffffffaefaffffffffffffffawe</div>
+			<div class="commentLinear"></div>
+			
+			</div>
+			
+			<div style="text-align: center;">
+			<textarea style="width: 70%; height: 10%;" placeholder="コメントを書く"></textarea>
+			<button type="button">送信</button>
 			</div>
 			
 		</div>
