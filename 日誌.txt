@@ -61,3 +61,17 @@ paginationサービス作業
 詳細ページのレイアウトを大雑把に配置
 
 *未解決:jasyptのDBinformation暗号化、 footer追加, 詳細ページinline-block問題, SPARQLを活用した施設検索＋paginationV2の追加
+
+
+
+-----------------------------------------------------2020-02-29↓
+
+
+先週送ったメールの返事が来た
+現在APIでは部分一致検索が利用できないという絶望的な答えだった
+向こうから代案としてSPARQLを教えてくれたが僕にはまだ難しいと思って
+検索paginationは後ほかのバージョンで追加することにした
+
+今日は会員登録ぺーじを作った
+
+*未解決:jasyptのDBinformation暗号化、 footer追加, 詳細ページinline-block問題, SPARQLを活用した施設検索＋paginationV2の追加
