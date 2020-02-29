@@ -60,4 +60,4 @@ paginationサービス作業
 
 詳細ページのレイアウトを大雑把に配置
 
-*未解決:jasyptのDBinformation暗号化、filters[]queryの多数データー出力問題, footer追加, 詳細ページinline-block問題
+*未解決:jasyptのDBinformation暗号化、 footer追加, 詳細ページinline-block問題, SPARQLを活用した施設検索＋paginationV2の追加

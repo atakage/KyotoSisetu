@@ -79,7 +79,7 @@ li a{
 
 <ul class="navMenu">
 	<li style="float:left;"><a href="${rootPath}/">一覧</a></li>
-	<li style="float:right;"><a href="#">会員登録</a></li>
+	<li style="float:right;"><a href="${rootPath}/member/join">会員登録</a></li>
 	<li style="float:right;"><a href="#">ログイン</a></li>
 	
 </ul>

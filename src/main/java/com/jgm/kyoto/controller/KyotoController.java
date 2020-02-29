@@ -28,6 +28,8 @@ public class KyotoController {
 	private final KyotoService ktService;
 	private final PaginationService pnService;
 	
+	
+	
 	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public String search(@RequestParam("searchVal") String searchVal,
 			@RequestParam(required = false, defaultValue = "1", value="curPage")int curPage, Model model) throws ParseException, IOException {

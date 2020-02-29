@@ -3,7 +3,7 @@ tbl_user
 
 u_id varchar2(50) primary key
 u_password varchar(20) not null
-u_nickname varchar2(8) not null
+u_nickname varchar2(8) not null unique
 u_grade varchar2(1)  //   A(admin), U(user)
 
 

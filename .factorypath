@@ -1,8 +1,26 @@
 <factorypath>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/jena/jena-arq/3.13.1/jena-arq-3.13.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/jena/jena-core/3.13.1/jena-core-3.13.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/jena/jena-iri/3.13.1/jena-iri-3.13.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/commons-cli/commons-cli/1.4/commons-cli-1.4.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/commons-codec/commons-codec/1.13/commons-codec-1.13.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/jena/jena-base/3.13.1/jena-base-3.13.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-csv/1.7/commons-csv-1.7.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-compress/1.19/commons-compress-1.19.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/github/andrewoma/dexx/collection/0.7/collection-0.7.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/jena/jena-shaded-guava/3.13.1/jena-shaded-guava-3.13.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/httpcomponents/httpclient/4.5.10/httpclient-4.5.10.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/httpcomponents/httpcore/4.4.12/httpcore-4.4.12.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/github/jsonld-java/jsonld-java/0.12.5/jsonld-java-0.12.5.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/commons-io/commons-io/2.6/commons-io-2.6.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.9.10/jackson-core-2.9.10.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/httpcomponents/httpclient-cache/4.5.10/httpclient-cache-4.5.10.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/thrift/libthrift/0.12.0/libthrift-0.12.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-lang3/3.9/commons-lang3-3.9.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.10.1/jackson-databind-2.10.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.10.1/jackson-annotations-2.10.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.10.1/jackson-core-2.10.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/jasypt/jasypt-spring31/1.9.3/jasypt-spring31-1.9.3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/jasypt/jasypt/1.9.3/jasypt-1.9.3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar" enabled="true" runInBatchMode="false"/>
