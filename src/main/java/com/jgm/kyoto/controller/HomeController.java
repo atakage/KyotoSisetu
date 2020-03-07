@@ -2,6 +2,8 @@ package com.jgm.kyoto.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(@RequestParam(required = false, defaultValue = "1", value="curPage")int curPage, Model model) throws ParseException, IOException {
 		
+
 		
 		int allPostCnt =  pnService.getAllPostCnt();
 		

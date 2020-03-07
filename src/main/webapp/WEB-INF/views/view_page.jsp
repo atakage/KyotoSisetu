@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 
@@ -243,6 +242,61 @@ button:hover {
 </style>
 
 
+
+<script>
+
+
+$(function(){
+
+
+
+	$('button').click(function(){
+
+
+		var c_text = $('#c_text').val()
+		var c_f_id = $('#c_f_id').val()
+
+		
+
+		
+	
+		
+		
+		$.ajax({
+
+
+			url:"${rootPath}/comment/insert", data:{c_text, c_f_id}, type:'post',
+			success:function(result){
+
+				alert(result)
+
+				}, error:function(){
+
+
+					alert("サーバーエラー")
+					
+					}
+
+
+			
+			})
+
+		
+		
+		})
+
+
+	
+	
+})
+
+
+</script>
+
+
+
+
+
 <body>
 
 
@@ -253,7 +307,7 @@ button:hover {
 <c:if test="${!empty FACILITY}">
 	
 	<c:forEach items="${FACILITY}" var="F">
-
+	<input id="c_f_id" type="hidden" value="${F.id }">
 	<div class="nameBox">
 		<a>${F.name}</a>
 	</div>
@@ -327,6 +381,8 @@ button:hover {
 			
 		<div class="commentBoxDetail">
 			
+			<div class="cmtEntranceDiv">
+			
 			<div style="padding: 3%;">
 			
 			<div class="nicknameBox">nicknameさん</div><div class="dateBox" style="display: inline-block; float:right;">2020-02-02</div>
@@ -335,10 +391,21 @@ button:hover {
 			
 			</div>
 			
+			
+			</div>
+			
+			<c:if test="${!empty USERSESSION }">
+			
 			<div style="text-align: center;">
-			<textarea style="width: 70%; height: 10%;" placeholder="コメントを書く"></textarea>
+			<textarea id="c_text" style="width: 70%; height: 10%;" placeholder="1000字以内で作成してくだたい" maxlength="1000"></textarea>
 			<button type="button">送信</button>
 			</div>
+			
+			</c:if>
+			
+			<c:if test="${empty USERSESSION }">
+				<div style="text-align: center;font-size: small;line-height: 5;opacity: 0.8;">ログイン後作成できます</div>
+			</c:if>
 			
 		</div>
 	

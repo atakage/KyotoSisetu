@@ -2,7 +2,7 @@
 tbl_user
 
 u_id varchar2(50) primary key
-u_password varchar(20) not null
+u_password varchar(100) not null
 u_nickname varchar2(8) not null unique
 u_grade varchar2(1)  //   A(admin), U(user)
 
@@ -10,8 +10,8 @@ u_grade varchar2(1)  //   A(admin), U(user)
 
 tbl_comment
 
-u_id varchar2(50) primary key 
-c_number number(4) not null // sequence
+u_id varchar2(50) 
+c_number number(4) not null // SEQ_COMMENT primary key 
 c_f_id varchar2(20) not null    // 施設のid
 c_text varchar2(1000)
 c_date varchar2(11) // java自動追加

@@ -1,5 +1,7 @@
 package com.jgm.kyoto.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,48 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
 	private final MemberService memberService;
+	
+	
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(HttpSession httpSession) {
+		
+		httpSession.removeAttribute("USERSESSION");
+		
+		return "redirect:/";
+		
+	}
+	
+	
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login(){
+		
+		return "login_page";
+		
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/login", method=RequestMethod.POST, produces = "application/text;charset=utf8")
+	public String login(UserVO userVO, HttpSession httpSession){
+		
+		
+		UserVO storedUserVO = memberService.loginCheck(userVO);
+		
+		
+		if(storedUserVO == null) {
+			
+			httpSession.removeAttribute("USERSESSION");
+			return "IDかパスワードが間違っています";
+		}
+		
+		log.debug(storedUserVO.toString());
+		httpSession.setAttribute("USERSESSION", storedUserVO);
+		return "ログイン成功";
+		
+	}
+	
+	
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(){

@@ -14,6 +14,24 @@
 	
 	</bean>
 	
-
+	
+	<bean id="configEnc" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		
+		<property name="config" ref="envConfig"/>
+	
+	</bean>
+	
+	
+	<bean class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+	
+		<constructor-arg ref="configEnc"/>
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/spring/appServlet/db.user.properties</value>
+			</list>
+		</property>
+	
+	
+	</bean>
 
 </beans>

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 
@@ -79,9 +78,20 @@ li a{
 
 <ul class="navMenu">
 	<li style="float:left;"><a href="${rootPath}/">一覧</a></li>
-	<li style="float:right;"><a href="${rootPath}/member/join">会員登録</a></li>
-	<li style="float:right;"><a href="#">ログイン</a></li>
 	
+	<c:choose>
+	
+	<c:when test="${empty USERSESSION}">
+	<li style="float:right;"><a href="${rootPath}/member/login">ログイン</a></li>
+	</c:when>
+	
+	<c:otherwise>
+	<li style="float:right;"><a href="${rootPath}/member/logout">ログアウト</a></li>
+	<li style="float:right;">${USERSESSION.u_nickname}さん</li>
+	</c:otherwise>
+	
+	</c:choose>
 </ul>
+
 
 </div>

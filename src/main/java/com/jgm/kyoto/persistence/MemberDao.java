@@ -17,6 +17,10 @@ public interface MemberDao {
 
 	@Insert("INSERT INTO tbl_user(U_ID, U_PASSWORD, U_NICKNAME, U_GRADE) VALUES(#{u_id}, #{u_password}, #{u_nickname}, #{u_grade})")
 	int insert(UserVO userVO);
+
+
+	@Select("SELECT * FROM tbl_user WHERE U_ID = #{u_id}")
+	UserVO selectByIdForVO(String u_id);
 	
 	
 	
