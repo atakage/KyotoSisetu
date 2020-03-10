@@ -10,7 +10,7 @@
 	<bean id="envConfig" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
 	
 		<property name="algorithm" value="PBEWithMD5AndDES"/>
-		<property name="passwordEnvName" value=""/>
+		<property name="passwordEnvName" value="ORACLE_PASS"/>
 	
 	</bean>
 	
