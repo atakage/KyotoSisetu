@@ -15,6 +15,7 @@ c_number number(4) not null // SEQ_COMMENT primary key
 c_f_id varchar2(20) not null    // 施設のid
 c_text varchar2(1000)
 c_date varchar2(11) // java自動追加
+u_nickname varchar2(8) tbl_user SELECT 結果
 
 CONSTRAINT fk_comment FOREIGN KEY(u_id) REFERENCES tbl_user(u_id) ON DELETE CASCADE
 

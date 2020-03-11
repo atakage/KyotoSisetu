@@ -47,13 +47,19 @@
 </style>
 
 
-
+<c:forEach items="${COMMENTLIST}" var="cmtList" >
 
 
 <div style="padding: 3%;">
 			
-			<div class="nicknameBox">nicknameさん</div><div class="dateBox" style="display: inline-block; float:right;">2020-02-02</div>
-			<div class="textBox" style="word-break:break-all; margin:10;">aewfaefaefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffffffffaefaffffffffffffffawe</div>
+			<div class="nicknameBox"><b>${cmtList.u_nickname}</b>さん</div><div class="dateBox" style="display: inline-block; float:right;">${cmtList.c_date}</div>
+			<div class="textBox" style="word-break:break-all; margin:10; white-space: pre;">${cmtList.c_text}</div>
 			<div class="commentLinear"></div>
 			
 </div>
+
+
+</c:forEach>
+			
+			
+			

@@ -1,7 +1,7 @@
 package com.jgm.kyoto.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jgm.kyoto.domain.FacilityVO;
+import com.jgm.kyoto.domain.CommentVO;
 import com.jgm.kyoto.domain.PaginationVO;
+import com.jgm.kyoto.service.CommentService;
 import com.jgm.kyoto.service.KyotoService;
 import com.jgm.kyoto.service.PaginationService;
 
@@ -27,6 +28,7 @@ public class KyotoController {
 	
 	private final KyotoService ktService;
 	private final PaginationService pnService;
+	private final CommentService commentService;
 	
 	
 	
@@ -61,8 +63,11 @@ public class KyotoController {
 		
 		JSONArray resArray = ktService.getDetail(id);
 		
+		List<CommentVO> commentList = commentService.getCommentList(id);
+		
 		
 		model.addAttribute("FACILITY", resArray);
+		model.addAttribute("COMMENTLIST", commentList);
 		
 		return "view_page";
 	}

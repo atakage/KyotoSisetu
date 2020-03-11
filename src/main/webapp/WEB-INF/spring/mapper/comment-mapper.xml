@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.jgm.kyoto.persistence.CommentDao">
+ 
+ 
+ <select id="getCommentList" resultType="CommentVO">
+ 
+ 	SELECT * FROM tbl_comment C WHERE C.C_F_ID = #{c_f_id} ORDER BY C_NUMBER
+ 	
+ 
+ 
+
+ </select>
+ 
+ </mapper> 

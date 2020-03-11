@@ -22,5 +22,7 @@ public class CommentVO {
 	private String c_text;// varchar2(1000)
 	private String c_date;// varchar2(11) // java自動追加
 	
+	
+	private String u_nickname;
 
 }

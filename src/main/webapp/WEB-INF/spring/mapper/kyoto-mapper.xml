@@ -6,4 +6,5 @@
  <mapper namespace="com.jgm.kyoto.persistence.KyotoDao">
  
  
+ 
  </mapper> 

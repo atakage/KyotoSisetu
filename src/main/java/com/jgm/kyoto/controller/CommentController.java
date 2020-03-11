@@ -1,8 +1,11 @@
 package com.jgm.kyoto.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,22 +28,27 @@ public class CommentController {
 	private final CommentService commentService;
 	
 	
-	@ResponseBody
+	
 	@RequestMapping(value="/insert", method=RequestMethod.POST, produces = "application/text;charset=utf8")
-	public String insert(CommentVO commentVO, HttpSession httpSession) {
+	public String insert(CommentVO commentVO, HttpSession httpSession, Model model) {
 		
 
 		UserVO userVO = (UserVO) httpSession.getAttribute("USERSESSION");
 		
 		commentVO.setU_id(userVO.getU_id());
+		commentVO.setU_nickname(userVO.getU_nickname());
 		
 		int ret = commentService.insert(commentVO);
 		
+		
+		List<CommentVO> commentList = commentService.getCommentList(commentVO.getC_f_id());
+		model.addAttribute("COMMENTLIST", commentList);
+		
 		if(ret > 0) {
-			return "ok";
+			return "commentpiece";
 		}
 		
-		return "fail";
+		return "commentpiece";
 		
 	}
 	

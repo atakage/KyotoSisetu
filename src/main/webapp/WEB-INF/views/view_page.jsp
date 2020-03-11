@@ -268,7 +268,7 @@ $(function(){
 			url:"${rootPath}/comment/insert", data:{c_text, c_f_id}, type:'post',
 			success:function(result){
 
-				alert(result)
+				$('.cmtEntranceDiv').html(result)
 
 				}, error:function(){
 
@@ -380,17 +380,18 @@ $(function(){
 	
 			
 		<div class="commentBoxDetail">
+		
+		
+			
 			
 			<div class="cmtEntranceDiv">
 			
-			<div style="padding: 3%;">
+			<c:if test="${!empty COMMENTLIST }">
 			
-			<div class="nicknameBox">nicknameさん</div><div class="dateBox" style="display: inline-block; float:right;">2020-02-02</div>
-			<div class="textBox" style="word-break:break-all; margin:10;">aewfaefaefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffefnewfffffffffffffffffffffaefaffffffffffffffawe</div>
-			<div class="commentLinear"></div>
 			
-			</div>
+			<%@ include file="/WEB-INF/views/commentpiece.jsp" %>
 			
+			</c:if>
 			
 			</div>
 			

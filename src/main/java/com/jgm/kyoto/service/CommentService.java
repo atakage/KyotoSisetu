@@ -2,6 +2,7 @@ package com.jgm.kyoto.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,13 @@ public class CommentService {
 		
 		
 		return commentDao.insert(commentVO);
+	}
+
+	public List<CommentVO> getCommentList(String c_f_id) {
+		// TODO Auto-generated method stub
+		
+		List<CommentVO> commentList = commentDao.getCommentList(c_f_id);
+		return commentList;
 	}
 
 }
