@@ -227,14 +227,14 @@
 }
 
 
-button {
+.insertButton {
     color: #fff;
     font-size: medium;
     background-color: mediumpurple;
     border-color: mediumpurple;
     }
 
-button:hover {
+.insertButton:hover {
     color: #fff;
     background-color: rgba(147, 112, 219, 0.5);
 	border-color:rgba(147, 112, 219, 0.5);
@@ -250,7 +250,7 @@ $(function(){
 
 
 
-	$('button').click(function(){
+	$('.insertButton').click(function(){
 
 
 		var c_text = $('#c_text').val()
@@ -399,7 +399,7 @@ $(function(){
 			
 			<div style="text-align: center;">
 			<textarea id="c_text" style="width: 70%; height: 10%;" placeholder="1000字以内で作成してくだたい" maxlength="1000"></textarea>
-			<button type="button">送信</button>
+			<button class="insertButton" type="button">送信</button>
 			</div>
 			
 			</c:if>

@@ -6,7 +6,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-
 <style>
 
 
@@ -38,13 +37,67 @@
 
 	width: 100%;
     height: 3px;
-    margin-top: 5%;
+    margin-top: 1%;
     background-color: mediumpurple;
     opacity: 0.4;
+    display: inline-block;
+
+}
+
+
+
+
+.deleteButton:hover{
+
+
+	cursor: pointer;
 
 }
 
 </style>
+
+
+<script>
+
+$(function(){
+
+
+	$('.deleteButton').click(function(){
+
+			
+				var c_number = $(this).siblings('#c_number').val()
+				
+
+				$.ajax({
+
+					/* 
+					hidden valueに重要な情報は入れない
+					htmlで操作してサーバーに送ることができるからとても危険！
+					情報チェックは必ずサーバーで！
+					
+					 */
+
+					url:"${rootPath}/comment/delete", data:{c_number}, type:'post',
+					success:function(result){
+
+						　alert(result)
+
+						},error:function(){
+
+							alert('サーバーエラー')
+
+							}
+
+					
+					})
+		
+		})
+	
+})
+
+
+</script>
+
 
 
 <c:forEach items="${COMMENTLIST}" var="cmtList" >
@@ -52,8 +105,13 @@
 
 <div style="padding: 3%;">
 			
+			
 			<div class="nicknameBox"><b>${cmtList.u_nickname}</b>さん</div><div class="dateBox" style="display: inline-block; float:right;">${cmtList.c_date}</div>
 			<div class="textBox" style="word-break:break-all; margin:10; white-space: pre;">${cmtList.c_text}</div>
+			<div style="float: right; margin-top: 3%">
+			<button class="deleteButton" style="border: 0;background: 0;font-size: larger;">&times;</button>
+			<input id="c_number" type="hidden" value="${cmtList.c_number}">
+			</div>
 			<div class="commentLinear"></div>
 			
 </div>

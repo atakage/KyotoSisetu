@@ -10,9 +10,18 @@
  
  	SELECT * FROM tbl_comment C WHERE C.C_F_ID = #{c_f_id} ORDER BY C_NUMBER
  	
- 
- 
-
  </select>
+ 
+ 
+ <delete id="delete">
+ 
+ 
+ 	DELETE FROM tbl_comment WHERE C_NUMBER = #{c_number} AND U_ID = #{u_id}
+ 	
+ 	<!-- 
+ 	(SELECT u_id FROM tbl_comment WHERE C_NUMBER = #{c_number}) = #{u_id}
+  -->
+ 
+ </delete>
  
  </mapper> 

@@ -41,4 +41,12 @@ public class CommentService {
 		return commentList;
 	}
 
+	public int delete(long c_number, String u_id) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		return commentDao.delete(c_number,u_id);
+	}
+
 }

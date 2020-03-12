@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jgm.kyoto.domain.CommentVO;
@@ -50,6 +51,31 @@ public class CommentController {
 		
 		return "commentpiece";
 		
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/delete", method=RequestMethod.POST, produces = "application/text;charset=utf8")
+	public String delete(@RequestParam("c_number") int c_number, HttpSession httpSession ) {
+		
+		
+		UserVO userVO = (UserVO) httpSession.getAttribute("USERSESSION");
+		
+		if(userVO == null) {
+			
+			return "ログインしてください";
+		}
+		
+		int ret = commentService.delete(Long.valueOf(c_number), userVO.getU_id());
+		
+		
+		if(ret > 0) {
+			
+			return "削除成功";
+		}
+		
+		
+		return "作成者だけ削除できます";
 	}
 	
 	

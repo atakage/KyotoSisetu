@@ -3,6 +3,7 @@ package com.jgm.kyoto.persistence;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 
 import com.jgm.kyoto.domain.CommentVO;
 
@@ -13,5 +14,7 @@ public interface CommentDao {
 	public int insert(CommentVO commentVO);
 
 	public List<CommentVO> getCommentList(String c_f_id);
+
+	public int delete(@Param("c_number") long c_number, @Param("u_id")String u_id);
 
 }
