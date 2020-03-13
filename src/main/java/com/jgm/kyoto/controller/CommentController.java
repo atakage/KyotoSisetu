@@ -56,7 +56,7 @@ public class CommentController {
 	
 	@ResponseBody
 	@RequestMapping(value="/delete", method=RequestMethod.POST, produces = "application/text;charset=utf8")
-	public String delete(@RequestParam("c_number") int c_number, HttpSession httpSession ) {
+	public String delete(@RequestParam("c_number") int c_number, HttpSession httpSession, Model model ) {
 		
 		
 		UserVO userVO = (UserVO) httpSession.getAttribute("USERSESSION");

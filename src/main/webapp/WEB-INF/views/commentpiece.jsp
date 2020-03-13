@@ -64,34 +64,45 @@ $(function(){
 
 	$('.deleteButton').click(function(){
 
+		if(!confirm('削除しますか？'))return false
 			
-				var c_number = $(this).siblings('#c_number').val()
+			var c_number = $(this).siblings('#c_number').val()
+			var c_f_id = $('#c_f_id').val()
+			
+
+			$.ajax({
+
+				/* 
+				hidden valueに重要な情報は入れない
+				htmlで操作してサーバーに送ることができるからとても危険！
+				情報チェックは必ずサーバーで！
 				
+				 */
 
-				$.ajax({
+				url:"${rootPath}/comment/delete", data:{c_number, c_f_id}, type:'post',
+				success:function(result){
 
-					/* 
-					hidden valueに重要な情報は入れない
-					htmlで操作してサーバーに送ることができるからとても危険！
-					情報チェックは必ずサーバーで！
-					
-					 */
+					if(result == '削除成功'){
+					alert(result)
+					document.location.reload()
+					}else{
 
-					url:"${rootPath}/comment/delete", data:{c_number}, type:'post',
-					success:function(result){
+						alert(result)
+						}
 
-						　alert(result)
+					},error:function(){
 
-						},error:function(){
+						alert('サーバーエラー')
 
-							alert('サーバーエラー')
+						}
 
-							}
+				
+				})
 
-					
-					})
-		
-		})
+
+	
+	})
+	
 	
 })
 
