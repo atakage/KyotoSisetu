@@ -49,4 +49,11 @@ public class CommentService {
 		return commentDao.delete(c_number,u_id);
 	}
 
+	public List<CommentVO> getHensinList(int c_p_number) {
+		// TODO Auto-generated method stub
+		
+		
+		return commentDao.getHensinList(c_p_number);
+	}
+
 }

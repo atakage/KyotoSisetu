@@ -411,7 +411,7 @@ $(function(){
 			</c:if>
 			
 			<c:if test="${empty USERSESSION }">
-				<div style="text-align: center;font-size: small;line-height: 5;opacity: 0.8;">ログイン後作成できます</div>
+				<div style="text-align: center;font-size: small;line-height: 5;opacity: 0.8;"><a href="${rootPath}/member/login" style="text-decoration: none;">ログイン</a>後作成できます</div>
 			</c:if>
 			
 		</div>

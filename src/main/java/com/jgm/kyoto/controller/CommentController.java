@@ -30,6 +30,26 @@ public class CommentController {
 	
 	
 	
+	
+	
+	
+	@RequestMapping(value="/hensinList",method=RequestMethod.POST)
+	public String hensinList(@RequestParam("c_p_number") int c_p_number, Model model) {
+		
+		
+		List<CommentVO> commentList2 = commentService.getHensinList(c_p_number);
+		
+		model.addAttribute("COMMENTLIST2", commentList2);
+		//model.addAttribute("c_number", String.valueOf(c_p_number));
+		
+		return "commentpiece2";
+	}
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value="/insert", method=RequestMethod.POST, produces = "application/text;charset=utf8")
 	public String insert(CommentVO commentVO, HttpSession httpSession, Model model) {
 		

@@ -75,3 +75,15 @@ paginationサービス作業
 今日は会員登録ぺーじを作った
 
 *未解決: footer追加, 詳細ページcssバグ問題, SPARQLを活用した施設検索＋paginationV2の追加, pagination block bug
+
+
+
+
+-----------------------------------------------------2020-03-14↓
+
+
+コメント返信機能の仕組みを構築した
+hierarchical queryで作る返信コメントはあとですることにした
+
+
+*未解決: footer追加, 詳細ページcssバグ問題, SPARQLを活用した施設検索＋paginationV2の追加, pagination block bug
