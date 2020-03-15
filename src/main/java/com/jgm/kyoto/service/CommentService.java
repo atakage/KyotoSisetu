@@ -56,4 +56,26 @@ public class CommentService {
 		return commentDao.getHensinList(c_p_number);
 	}
 
+	public int hensinInsert(CommentVO commentVO) {
+		// TODO Auto-generated method stub
+		
+		
+		int count = commentDao.checkPNumCount(commentVO);
+		
+		if(count > 0) {
+			return 0;
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date date = new Date();
+		
+		String  c_date = sdf.format(date);
+		
+		commentVO.setC_date(c_date);
+
+		
+		return commentDao.hensinInsert(commentVO);
+	}
+
 }

@@ -11,11 +11,30 @@
  
  
  
- 	SELECT * FROM tbl_comment C WHERE C.C_F_ID = #{c_f_id} ORDER BY C_NUMBER
+ 	SELECT * FROM tbl_comment C WHERE C.C_F_ID = #{c_f_id} AND C_P_NUMBER IS NULL ORDER BY C_NUMBER
  	
  </select>
  
+ <select id="checkPNumCount" resultType="int">
+ 
+ 	SELECT COUNT(*) FROM tbl_comment WHERE 
+ 	(SELECT C_P_NUMBER FROM tbl_comment WHERE C_NUMBER = #{c_p_number})  IS NOT NULL
+ 	
+ 	
+ 
+ </select>
+ 
 
+ <insert id="hensinInsert" parameterType="CommentVO">
+ 
+ 
+ 	INSERT INTO tbl_comment(U_ID, C_NUMBER, C_F_ID, C_TEXT, C_DATE, U_NICKNAME, C_P_NUMBER)
+ 	VALUES(#{u_id}, SEQ_COMMENT.NEXTVAL, #{c_f_id}, #{c_text}, #{c_date}, #{u_nickname}, #{c_p_number})
+
+ 
+ 
+ 
+ </insert>
  
  
  <delete id="delete">

@@ -40,7 +40,9 @@ public class CommentController {
 		List<CommentVO> commentList2 = commentService.getHensinList(c_p_number);
 		
 		model.addAttribute("COMMENTLIST2", commentList2);
-		//model.addAttribute("c_number", String.valueOf(c_p_number));
+		
+		// 返信ぺーじで使用するための
+		model.addAttribute("c_p_number", String.valueOf(c_p_number));
 		
 		return "commentpiece2";
 	}
@@ -71,6 +73,30 @@ public class CommentController {
 		
 		return "commentpiece";
 		
+	}
+	
+	
+	
+	@RequestMapping(value="/hensininsert", method=RequestMethod.POST)
+	public String hensinInsert(CommentVO commentVO, HttpSession httpSession, Model model) {
+		
+		
+		UserVO userVO = (UserVO) httpSession.getAttribute("USERSESSION");
+		
+		commentVO.setU_id(userVO.getU_id());
+		commentVO.setU_nickname(userVO.getU_nickname());
+		
+		int ret = commentService.hensinInsert(commentVO);
+		
+		
+		List<CommentVO> commentList = commentService.getCommentList(commentVO.getC_f_id());
+		model.addAttribute("COMMENTLIST", commentList);
+		List<CommentVO> commentList2 = commentService.getHensinList(commentVO.getC_p_number());
+		model.addAttribute("COMMENTLIST2", commentList2);
+		
+		
+		
+		return "commentpiece2";
 	}
 	
 	

@@ -21,4 +21,8 @@ public interface CommentDao {
 	@Select("SELECT * FROM tbl_comment WHERE C_P_NUMBER = #{c_p_number} ORDER BY C_NUMBER")
 	public List<CommentVO> getHensinList(int c_p_number);
 
+	public int hensinInsert(CommentVO commentVO);
+
+	public int checkPNumCount(CommentVO commentVO);
+
 }

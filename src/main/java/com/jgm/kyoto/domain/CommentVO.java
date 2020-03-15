@@ -24,5 +24,6 @@ public class CommentVO {
 	
 	
 	private String u_nickname;
+	private int c_p_number;
 
 }

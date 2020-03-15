@@ -127,23 +127,23 @@ $(function(){
 	$('.insertHensinButton').click(function(){
 
 
-		var c_text = $('#c_text2').val()
+		var c_text = $(this).siblings('#c_text2').val()	
 		var c_f_id = $('#c_f_id').val()
-		var c_p_number = $('#c_number2').val()
+		var c_p_number = ${c_p_number}
 
 		
 
-		
-	
+		var divAddr = 'commenthenSinEntrance'
+			divAddr += c_p_number
 		
 		
 		$.ajax({
 
 
-			url:"${rootPath}/comment/insert", data:{c_text, c_f_id, c_p_number}, type:'post',
+			url:"${rootPath}/comment/hensininsert", data:{c_text, c_f_id, c_p_number}, type:'post',
 			success:function(result){
 
-				$('.commenthenSinEntrance').html(result)
+				$('.'+divAddr).html(result)
 
 				}, error:function(){
 
@@ -204,6 +204,7 @@ $(function(){
 			<div style="text-align: center;">
 			<textarea id="c_text2" style="width: 70%; height: 10%;" placeholder="1000字以内で作成してくだたい" maxlength="1000"></textarea>
 			<button class="insertHensinButton" type="button">送信</button>
+			
 			</div>
 			<div class="commentLinear"></div>
 			</c:if>
