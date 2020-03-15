@@ -63,10 +63,9 @@ $(function(){
 
 
 	var hensinSW = 'off'
-	
 
 
-	$('.deleteButton').click(function(){
+	$('.deleteButton').unbind("click").bind('click',function(){
 
 		if(!confirm('削除しますか？'))return false
 			
@@ -115,7 +114,11 @@ $(function(){
 	
 	
 
-	$('.hensinButton').click(function(){
+	$('.hensinButton').unbind("click").bind('click',function(){
+
+
+		
+
 
 
 		var hensinDDSW = $(this).siblings('#hensinSW').val()
@@ -140,6 +143,7 @@ $(function(){
 					
 					// use variable in jqeury selector 
 					$('.'+divAddr).html(result)
+			
 
 
 					},error:function(){
@@ -188,8 +192,7 @@ $(function(){
 					// html():上書きされる
 					// appendTo(): 追加される
 					$('.'+divAddr).html(result)
-
-
+				
 					},error:function(){
 
 						alert("サーバーエラー")

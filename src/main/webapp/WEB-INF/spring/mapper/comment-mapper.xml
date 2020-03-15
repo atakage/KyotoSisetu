@@ -20,7 +20,13 @@
  	SELECT COUNT(*) FROM tbl_comment WHERE 
  	(SELECT C_P_NUMBER FROM tbl_comment WHERE C_NUMBER = #{c_p_number})  IS NOT NULL
  	
- 	
+ 
+ </select>
+ 
+ <select id="checkPNumCountDelVer" resultType="int">
+ 
+ 
+ 	SELECT COUNT(*) FROM tbl_comment WHERE C_P_NUMBER = #{c_number}
  
  </select>
  

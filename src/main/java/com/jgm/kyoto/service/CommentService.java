@@ -44,9 +44,18 @@ public class CommentService {
 	public int delete(long c_number, String u_id) {
 		// TODO Auto-generated method stub
 		
+		int ret = commentDao.checkPNumCountDelVer(c_number);
 		
+		if(ret < 1) {
+			
+			
+			return commentDao.delete(c_number,u_id);
+		}
 		
-		return commentDao.delete(c_number,u_id);
+		String c_text = "<p style=\"font-size: small;color: gray;\">削除されたコメントです";
+		 commentDao.updateCText(c_number,c_text,u_id);
+
+		 return 999999999;
 	}
 
 	public List<CommentVO> getHensinList(int c_p_number) {
@@ -59,7 +68,7 @@ public class CommentService {
 	public int hensinInsert(CommentVO commentVO) {
 		// TODO Auto-generated method stub
 		
-		
+		// chrome開発者ツールでパラメータ変更防止
 		int count = commentDao.checkPNumCount(commentVO);
 		
 		if(count > 0) {
@@ -76,6 +85,16 @@ public class CommentService {
 
 		
 		return commentDao.hensinInsert(commentVO);
+	}
+
+	public int deleteHensin(Long c_number, String u_id) {
+		// TODO Auto-generated method stub
+		
+		
+		String c_text = "<p style=\"font-size: small;color: gray;\">削除されたコメントです";
+		
+		
+		return commentDao.deleteHensin(c_number,u_id, c_text);
 	}
 
 }

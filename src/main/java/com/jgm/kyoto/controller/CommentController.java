@@ -115,13 +115,52 @@ public class CommentController {
 		int ret = commentService.delete(Long.valueOf(c_number), userVO.getU_id());
 		
 		
+		
+		if(ret == 999999999) {
+			
+			return "削除成功";
+		}
+		
+
+		
+		
 		if(ret > 0) {
 			
 			return "削除成功";
 		}
 		
 		
+		
 		return "作成者だけ削除できます";
+	}
+	
+	
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/deletehensin", method=RequestMethod.POST, produces = "application/text;charset=utf8")
+	public String deleteHensin(@RequestParam("c_number") int c_number, HttpSession httpSession, Model model ) {
+		
+		
+		UserVO userVO = (UserVO) httpSession.getAttribute("USERSESSION");
+		
+		if(userVO == null) {
+			
+			return "ログインしてください";
+		}
+		
+		int ret = commentService.deleteHensin(Long.valueOf(c_number), userVO.getU_id());
+		
+		
+		if(ret > 0) {
+			
+			return "削除成功";
+		}
+		
+		
+		return "削除できません";
 	}
 	
 	

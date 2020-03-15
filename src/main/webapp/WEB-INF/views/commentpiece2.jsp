@@ -76,8 +76,12 @@
 
 $(function(){
 
-
-	$('.deleteButton2').click(function(){
+		// ajaxでロードしたページのscriptが動作しない状況に備える
+		
+		
+		
+		
+	$(document).on('click','.deleteButton2',function(){
 
 		if(!confirm('削除しますか？'))return false
 			
@@ -89,12 +93,12 @@ $(function(){
 
 				/* 
 				hidden valueに重要な情報は入れない
-				htmlで操作してサーバーに送ることができるからとても危険！
+				パラメータをhtmlで操作してサーバーに送ることができるからとても危険！
 				情報チェックは必ずサーバーで！
 				
 				 */
 
-				url:"${rootPath}/comment/delete", data:{c_number, c_f_id}, type:'post',
+				url:"${rootPath}/comment/deletehensin", data:{c_number, c_f_id}, type:'post',
 				success:function(result){
 
 					if(result == '削除成功'){
@@ -124,7 +128,7 @@ $(function(){
 
 
 
-	$('.insertHensinButton').click(function(){
+	$(document).off().on('click','.insertHensinButton',function(){
 
 
 		var c_text = $(this).siblings('#c_text2').val()	
@@ -185,6 +189,7 @@ $(function(){
 			<div class="textBox" style="word-break:break-all; margin:10; white-space: pre;">${cmtList2.c_text}</div>
 			<div style="width: 100%;float: right; margin-top: 3%">
 			<div>
+			<input id="c_number2" type="hidden" value="${cmtList2.c_number}">
 			<button class="deleteButton2" style="border: 0;background: 0;font-size: larger; float:right;">&times;</button>
 			</div>
 			<input id="c_number2" type="hidden" value="${cmtList2.c_number}">

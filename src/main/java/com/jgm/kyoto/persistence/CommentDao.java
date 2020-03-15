@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.jgm.kyoto.domain.CommentVO;
 
@@ -24,5 +25,13 @@ public interface CommentDao {
 	public int hensinInsert(CommentVO commentVO);
 
 	public int checkPNumCount(CommentVO commentVO);
+
+	public int checkPNumCountDelVer(long c_number);
+
+	@Update("UPDATE tbl_comment SET C_TEXT = #{c_text} WHERE C_NUMBER = #{c_number} AND U_ID = #{u_id}")
+	public int updateCText(@Param("c_number")long c_number, @Param("c_text")String c_text, @Param("u_id") String u_id);
+
+	@Update("UPDATE tbl_comment SET C_TEXT = #{c_text} WHERE C_NUMBER = #{c_number} AND U_ID = #{u_id} AND C_P_NUMBER IS NOT NULL")
+	public int deleteHensin(@Param("c_number")Long c_number, @Param("u_id")String u_id, @Param("c_text")String c_text);
 
 }
