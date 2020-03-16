@@ -74,103 +74,109 @@
 
 <script>
 
+
 $(function(){
 
-		// ajaxでロードしたページのscriptが動作しない状況に備える
-		
-		
-		
-		
-	$(document).on('click','.deleteButton2',function(){
+	// ajaxでロードしたページのscriptが動作しない状況に備える
+	
 
-		if(!confirm('削除しますか？'))return false
+	
+	
+$(document).on('click','.deleteButton2',function(){
+
+	if(!confirm('削除しますか？'))return false
+		
+		var c_number = $(this).siblings('#c_number2').val()
+		var c_f_id = $('#c_f_id').val()
+		
+
+		$.ajax({
+
+			/* 
+			hidden valueに重要な情報は入れない
+			パラメータをhtmlで操作してサーバーに送ることができるからとても危険！
+			情報チェックは必ずサーバーで！
 			
-			var c_number = $(this).siblings('#c_number2').val()
-			var c_f_id = $('#c_f_id').val()
-			
+			 */
 
-			$.ajax({
+			url:"${rootPath}/comment/deletehensin", data:{c_number, c_f_id}, type:'post',
+			success:function(result){
 
-				/* 
-				hidden valueに重要な情報は入れない
-				パラメータをhtmlで操作してサーバーに送ることができるからとても危険！
-				情報チェックは必ずサーバーで！
-				
-				 */
+				if(result == '削除成功'){
+				alert(result)
+				document.location.reload()
+				}else{
 
-				url:"${rootPath}/comment/deletehensin", data:{c_number, c_f_id}, type:'post',
-				success:function(result){
-
-					if(result == '削除成功'){
 					alert(result)
-					document.location.reload()
-					}else{
+					}
 
-						alert(result)
-						}
+				},error:function(){
 
-					},error:function(){
+					alert('サーバーエラー')
 
-						alert('サーバーエラー')
+					}
 
-						}
+			
+			})
 
+
+
+})
+
+
+
+
+
+
+
+$(document).on('click','.insertHensinButton',function(){
+
+
+	var c_text = $(this).siblings('#c_text2').val()	
+	var c_f_id = $('#c_f_id').val()
+	var c_p_number = $(this).siblings('.c_p_number').val()	
+
+	
+
+	var divAddr = 'commenthenSinEntrance'
+		divAddr += c_p_number
+	
+	alert(divAddr)
+	$.ajax({
+
+
+		url:"${rootPath}/comment/hensininsert", data:{c_text, c_f_id, c_p_number}, type:'post',
+		success:function(result){
+
+			
+			$('.'+divAddr).html(result)
+			
+
+			
+
+			}, error:function(){
+
+
+				alert("サーバーエラー")
 				
-				})
+				}
 
+			
+		
+		})
 
+		
 	
 	})
 
 
 
-
-
-
-
-	$(document).off().on('click','.insertHensinButton',function(){
-
-
-		var c_text = $(this).siblings('#c_text2').val()	
-		var c_f_id = $('#c_f_id').val()
-		var c_p_number = ${c_p_number}
-
-		
-
-		var divAddr = 'commenthenSinEntrance'
-			divAddr += c_p_number
-		
-		
-		$.ajax({
-
-
-			url:"${rootPath}/comment/hensininsert", data:{c_text, c_f_id, c_p_number}, type:'post',
-			success:function(result){
-
-				$('.'+divAddr).html(result)
-
-				}, error:function(){
-
-
-					alert("サーバーエラー")
-					
-					}
-
-
-			
-			})
-
-		
-		
-		})
-	
-	
-	
 })
 
 
-</script>
 
+
+</script>
 
 
 <div class="comment2Box">
@@ -209,7 +215,7 @@ $(function(){
 			<div style="text-align: center;">
 			<textarea id="c_text2" style="width: 70%; height: 10%;" placeholder="1000字以内で作成してくだたい" maxlength="1000"></textarea>
 			<button class="insertHensinButton" type="button">送信</button>
-			
+			<input class="c_p_number" type="hidden" value="${c_p_number}">
 			</div>
 			<div class="commentLinear"></div>
 			</c:if>

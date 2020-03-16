@@ -59,160 +59,128 @@
 
 <script>
 
+
 $(function(){
 
+		var hensinSW = 'off'
 
-	var hensinSW = 'off'
 
-
-	$('.deleteButton').unbind("click").bind('click',function(){
-
-		if(!confirm('削除しますか？'))return false
 			
-			var c_number = $(this).siblings('#c_number').val()
-			var c_f_id = $('#c_f_id').val()
-			
-
-			$.ajax({
-
-				/* 
-				hidden valueに重要な情報は入れない
-				htmlで操作してサーバーに送ることができるからとても危険！
-				情報チェックは必ずサーバーで！
+		$('.deleteButton').unbind("click").bind('click',function(){
+			if(!confirm('削除しますか？'))return false
 				
-				 */
-
-				url:"${rootPath}/comment/delete", data:{c_number, c_f_id}, type:'post',
-				success:function(result){
-
-					if(result == '削除成功'){
-					alert(result)
-					document.location.reload()
-					}else{
-
+				var c_number = $(this).siblings('#c_number').val()
+				var c_f_id = $('#c_f_id').val()
+				
+				$.ajax({
+					/* 
+					hidden valueに重要な情報は入れない
+					htmlで操作してサーバーに送ることができるからとても危険！
+					情報チェックは必ずサーバーで！
+					
+					 */
+					url:"${rootPath}/comment/delete", data:{c_number, c_f_id}, type:'post',
+					success:function(result){
+						if(result == '削除成功'){
 						alert(result)
-						}
-
-					},error:function(){
-
-						alert('サーバーエラー')
-
-						}
-
-				
-				})
-
-
-	
-	})
-
-
-	
-	
-	
-	
-	
-	
-
-	$('.hensinButton').unbind("click").bind('click',function(){
-
-
-		
-
-
-
-		var hensinDDSW = $(this).siblings('#hensinSW').val()
-		var createCmt2SW = $(this).siblings('#createCmt2SW').val()
-		
-		
-		if(hensinDDSW == 'off' && createCmt2SW == 'on'){ 
-			
-		
-
-		var c_p_number = $(this).siblings('#c_number').val()
-		var divAddr = 'commenthenSinEntrance'
-			divAddr += c_p_number  // divのはてにそれぞれナンバーをつけて
-								// 重複適用を防ぐ
-
-			$.ajax({		
-
-
-				url:"${rootPath}/comment/hensinList", data:{c_p_number}, type:"post",
-				success:function(result){
-
+						document.location.reload()
+						}else{
+							alert(result)
+							}
+						},error:function(){
+							alert('サーバーエラー')
+							}
 					
-					// use variable in jqeury selector 
-					$('.'+divAddr).html(result)
-			
-
-
-					},error:function(){
-
-						alert("サーバーエラー")
-
-						}
-
-				
-				})
-
-				
-				$(this).siblings('#hensinSW').attr('value', 'on')
-				$(this).text('返信▼')
-				$(this).siblings('#createCmt2SW').attr('value', 'off')
-		
-			}else if(hensinDDSW == 'on' && createCmt2SW == 'off'){
-
-				var divAddr = 'commenthenSinEntrance'
-				var c_p_number = $(this).siblings('#c_number').val()
-					divAddr += c_p_number  // divのはてにそれぞれナンバーをつけて
-										// 重複適用を防ぐ
-										
-										
-				$('.'+divAddr).children('.comment2Box').css('display','none')
-				$(this).siblings('#hensinSW').attr('value', 'off')
-				$(this).text('返信▲')
-
-			}else if(hensinDDSW == 'off' && createCmt2SW == 'off'){
-
-				var divAddr = 'commenthenSinEntrance'
-				var c_p_number = $(this).siblings('#c_number').val()
-					divAddr += c_p_number  // divのはてにそれぞれナンバーをつけて
-											// 重複適用を防ぐ
-				
-				
-				
-				$.ajax({		
-
-
-				url:"${rootPath}/comment/hensinList", data:{c_p_number}, type:"post",
-				success:function(result){
-
-					
-					
-					// html():上書きされる
-					// appendTo(): 追加される
-					$('.'+divAddr).html(result)
-				
-					},error:function(){
-
-						alert("サーバーエラー")
-
-						}
-
-				
-				})
-				
-				
-											
-				$('.'+divAddr).children('.comment2Box').css('display','block')
-				$(this).siblings('#hensinSW').attr('value', 'on')
-				$(this).text('返信▼')
-				}
+					})
 		
 		})
-	
-	
-})
+		
+		
+		
+		
+		
+		
+		$('.hensinButton').unbind("click").bind('click',function(){
+
+			
+			
+			var hensinDDSW = $(this).siblings('#hensinSW').val()
+			var createCmt2SW = $(this).siblings('#createCmt2SW').val()
+			
+			
+			if(hensinDDSW == 'off' && createCmt2SW == 'on'){ 
+				
+			
+			var c_p_number = $(this).siblings('#c_number').val()
+			var divAddr = 'commenthenSinEntrance'
+				divAddr += c_p_number  // divのはてにそれぞれナンバーをつけて
+									// 重複適用を防ぐ
+				$.ajax({		
+					url:"${rootPath}/comment/hensinList", data:{c_p_number}, type:"post",
+					success:function(result){
+						
+						// use variable in jqeury selector 
+						
+					
+						$('.'+divAddr).html(result)
+				
+						},error:function(){
+							alert("サーバーエラー")
+							}
+					
+					})
+					
+					$(this).siblings('#hensinSW').attr('value', 'on')
+					$(this).text('返信▼')
+					$(this).siblings('#createCmt2SW').attr('value', 'off')
+			
+				}else if(hensinDDSW == 'on' && createCmt2SW == 'off'){
+					var divAddr = 'commenthenSinEntrance'
+					var c_p_number = $(this).siblings('#c_number').val()
+						divAddr += c_p_number  // divのはてにそれぞれナンバーをつけて
+											// 重複適用を防ぐ
+											
+					
+										
+											
+					$('.'+divAddr).children('.comment2Box').css('display','none')
+					$(this).siblings('#hensinSW').attr('value', 'off')
+					$(this).text('返信▲')
+				}else if(hensinDDSW == 'off' && createCmt2SW == 'off'){
+					var divAddr = 'commenthenSinEntrance'
+					var c_p_number = $(this).siblings('#c_number').val()
+						divAddr += c_p_number  // divのはてにそれぞれナンバーをつけて
+												// 重複適用を防ぐ
+					
+					
+					
+					$.ajax({		
+					url:"${rootPath}/comment/hensinList", data:{c_p_number}, type:"post",
+					success:function(result){
+						
+						
+						// html():上書きされる
+						// appendTo(): 追加される
+						$('.'+divAddr).html(result)
+					
+						},error:function(){
+							alert("サーバーエラー")
+							}
+					
+					})
+					
+					
+												
+					$('.'+divAddr).children('.comment2Box').css('display','block')
+					$(this).siblings('#hensinSW').attr('value', 'on')
+					$(this).text('返信▼')
+					}
+			
+			})
+		
+		
+	})
+
 
 
 </script>
@@ -242,7 +210,13 @@ $(function(){
 			
 			<div class="commenthenSinEntrance${cmtList.c_number}">
 			
+
+			
 			</div>
+			
+			
+			
+			
 			
 			
 </div>

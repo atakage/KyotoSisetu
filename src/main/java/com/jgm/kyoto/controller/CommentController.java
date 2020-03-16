@@ -42,7 +42,7 @@ public class CommentController {
 		model.addAttribute("COMMENTLIST2", commentList2);
 		
 		// 返信ぺーじで使用するための
-		model.addAttribute("c_p_number", String.valueOf(c_p_number));
+		model.addAttribute("c_p_number", c_p_number);
 		
 		return "commentpiece2";
 	}
@@ -86,6 +86,7 @@ public class CommentController {
 		commentVO.setU_id(userVO.getU_id());
 		commentVO.setU_nickname(userVO.getU_nickname());
 		
+		log.debug("hensininsert go");
 		int ret = commentService.hensinInsert(commentVO);
 		
 		
@@ -94,6 +95,7 @@ public class CommentController {
 		List<CommentVO> commentList2 = commentService.getHensinList(commentVO.getC_p_number());
 		model.addAttribute("COMMENTLIST2", commentList2);
 		
+		model.addAttribute("c_p_number", commentVO.getC_p_number());
 		
 		
 		return "commentpiece2";
@@ -163,5 +165,11 @@ public class CommentController {
 		return "削除できません";
 	}
 	
+	
+	@RequestMapping(value="/removecomment", method=RequestMethod.POST)
+	public String removeComment() {
+		
+		return "commentpiece2";
+	}
 	
 }
