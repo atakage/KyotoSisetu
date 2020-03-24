@@ -253,7 +253,7 @@ public class KyotoService {
 		// TODO Auto-generated method stub
 		
 		String requestURL = "	https://data.city.kyoto.lg.jp/API/action/datastore/search.json?resource_id=f14b57c2-48dd-4aa7-b754-a4f4ac340f2d"
-				+ "&fields=id,name,department,address,pic,note,tel,url,optime,holiday,fee"
+				+ "&fields=id,name,department,address,pic,note,tel,url,optime,holiday,fee,latitude,longitude"
 				+ "&filters[id]="+id;
 		
 		String resString	= this.getKyotoString(requestURL);

@@ -66,6 +66,8 @@ public class KyotoController {
 		List<CommentVO> commentList = commentService.getCommentList(id);
 		
 		
+		
+	
 		model.addAttribute("FACILITY", resArray);
 		model.addAttribute("COMMENTLIST", commentList);
 		

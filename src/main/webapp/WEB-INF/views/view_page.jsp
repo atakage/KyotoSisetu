@@ -5,6 +5,22 @@
 <c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 
 
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+
+
+
+ 
+
+
+
 <%@ include file = "/WEB-INF/views/include/include_header_nav.jsp"%>
 
 
@@ -243,11 +259,46 @@
 
 
 
+
+
+<script>
+
+function init(){
+
+	
+var longitude = document.getElementById('longitude').value
+var latitude = document.getElementById('latitude').value
+var name = document.getElementById('name').text
+
+
+
+// マップライブラリー：leaflet
+// タイル：国土地理院
+var mymap = L.map('mapcontainer')
+
+mymap.setView([latitude, longitude], 18)
+L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+	attribution: '地理院タイル'}).addTo(mymap)
+L.marker([latitude,longitude],{title:name}).addTo(mymap)
+
+}
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
 <script>
 
 
 $(function(){
-
 
 
 	$('.insertButton').click(function(){
@@ -303,7 +354,7 @@ $(function(){
 
 
 
-<body>
+<body onload="init()">
 
 
 
@@ -315,7 +366,7 @@ $(function(){
 	<c:forEach items="${FACILITY}" var="F">
 	<input id="c_f_id" type="hidden" value="${F.id }">
 	<div class="nameBox">
-		<a>${F.name}</a>
+		<a id="name">${F.name}</a>
 	</div>
 	
 	<div class="infoBox">
@@ -373,6 +424,20 @@ $(function(){
 	<div style="margin-top: 5%;">*所管局-${F.department}</div>
 	
 </div>
+
+
+
+
+
+ <div  id="mapcontainer" style="margin-top: 5%;height: 200px;">
+ 
+ <input type="hidden" id="longitude" value="${F.longitude }">
+ <input type="hidden" id="latitude" value="${F.latitude }">
+ </div>
+
+
+
+
 
 	</c:forEach>
 	

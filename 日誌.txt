@@ -88,3 +88,15 @@ hierarchical queryで作る返信コメントはあとですることにした
 
 *未解決: footer追加, 詳細ページcssバグ問題, SPARQLを活用した施設検索＋paginationV2の追加, pagination block bug,
 	返信バグ
+
+
+
+
+-----------------------------------------------------2020-03-24↓
+
+
+マップライブラリー使って詳細ページに地図をつけた
+
+
+*未解決: footer追加, 詳細ページcssバグ問題, SPARQLを活用した施設検索＋paginationV2の追加, pagination block bug,
+	返信バグ
