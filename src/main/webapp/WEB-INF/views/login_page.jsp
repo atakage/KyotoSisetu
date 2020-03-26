@@ -60,7 +60,56 @@
 
 
 
+
+<script type="text/javascript">
+window.yconnectInit = function() {
+    YAHOO.JP.yconnect.Authorization.init({
+        button: {
+            format: "image",
+            type: "d",
+            textType:"a",
+            width: 196,
+            height: 38,
+            className: "yconnectLogin"
+        },
+        authorization: {
+            clientId: "dj0zaiZpPXFSRVM1WlhyWGZ2UCZzPWNvbnN1bWVyc2VjcmV0Jng9MDk-",
+            redirectUri: "http://localhost:8084/kyoto/",
+            scope: "openid email profile address",
+            state: "123",
+            nonce: "123",
+            windowWidth: "500",
+            windowHeight: "400"
+        },
+        onError: function(res) {
+
+        
+            
+            // エラー発生時のコールバック関数
+            alert(JSON.stringify(res))
+        },
+        onCancel: function(res) {
+            // 同意キャンセルされた時のコールバック関数
+             alert(JSON.stringify(res))
+            alert(res)
+        }
+    });
+};
+(function(){
+var fs = document.getElementsByTagName("script")[0], s = document.createElement("script");
+s.setAttribute("src", "https://s.yimg.jp/images/login/yconnect/auth/1.0.3/auth-min.js");
+fs.parentNode.insertBefore(s, fs);
+})();
+</script>
+
+
+
+
 <script>
+
+
+
+
 
 
 $(function(){
@@ -129,8 +178,11 @@ $(function(){
 	<div>
 	<div><input id="u_id" name="u_id" placeholder="ID" maxlength="50" style="font-size: large;"></div>
 	<div><input id="u_password" name="u_password" type="password" maxlength="20" placeholder="パスワード" style="font-size: large;"></div>
+	
+	
 	<button id="loginButton" type="button" style="font-weight: bold;width: 40%;height: 7%;background: lightslategray;color: white; cursor: pointer;">ログイン</button><br>
-	<button onclick="document.location.href='${rootPath}/member/join'" type="button" style="font-weight: bold;width: 40%;height: 7%;background: lightslategray;color: white; cursor: pointer;">会員登録</button>
+	<button onclick="document.location.href='${rootPath}/member/join'" type="button" style="font-weight: bold;width: 40%;height: 7%;background: lightslategray;color: white; cursor: pointer;">会員登録</button><br>
+	<span class="yconnectLogin"></span>
 	</div>
 	</form>
 </div>
