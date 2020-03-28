@@ -18,6 +18,8 @@ import com.jgm.kyoto.service.MemberService;
 import jp.co.yahoo.yconnect.YConnectExplicit;
 import jp.co.yahoo.yconnect.core.oauth2.AuthorizationException;
 import jp.co.yahoo.yconnect.core.oauth2.TokenException;
+import jp.co.yahoo.yconnect.core.oidc.IdTokenObject;
+import jp.co.yahoo.yconnect.core.oidc.UserInfoObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +36,7 @@ public class MemberController {
 	private final String yahooClientSecret = "e2a9a9af53874d2ec95e194c8331365681cc045c";
 	private final String redirectURI = "http://localhost:8084/kyoto/member/yahootoken";
 	
-	
+	private final String nonce = "123";
 	@RequestMapping(value="/yahootoken", method=RequestMethod.GET)
 	public String yahooToken( @RequestParam("state") String state,
 			HttpServletRequest httpServletRequest) throws URISyntaxException {
@@ -53,31 +55,59 @@ public class MemberController {
 		try {
 			
 			
-			if(yconnect.hasAuthorizationCode(requestURI)){
-				log.debug("pass");
+			if(yconnect.hasAuthorizationCode(requestURI)) {
+	
+				
 				String code = yconnect.getAuthorizationCode(state);
+				log.debug("code:"+code.toString());
 				yconnect.requestToken(code, yahooClientId, yahooClientSecret, redirectURI);
 				String accessTokenString = yconnect.getAccessToken();
+				log.debug("accessTokenString:"+accessTokenString.toString());
 				String refreshTokent = yconnect.getRefreshToken();
+				log.debug("refreshTokent:"+ refreshTokent.toString() );
 				String idTokenString = yconnect.getIdToken();
-				log.debug("pass2");
+				log.debug("idTokenString:"+ idTokenString.toString() );
+				
+				
+				
+				
+				if(yconnect.verifyIdToken(nonce, yahooClientId, yahooClientSecret, idTokenString)) {
+					
+					
+					IdTokenObject idTokenObject = yconnect.decodeIdToken(idTokenString);
+					log.debug("idTokenObject:"+ idTokenObject.toString() );
+					
+					
+					yconnect.requestUserInfo(accessTokenString);
+					UserInfoObject userInfoObject = yconnect.getUserInfoObject();
+					
+					log.debug("userobj:"+userInfoObject.toString());
+					
+				}else {
+					
+					log.debug("fail");
+					
+				}
+				
+				
+				
 				
 				}
 		} catch (AuthorizationException e) {
 			// TODO Auto-generated catch block
-			log.debug("에러1");
+			
 			e.printStackTrace();
 		} catch (TokenException e) {
 			// TODO Auto-generated catch block
-			log.debug("에러2");
+	
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			log.debug("에러3");
+	
 			e.printStackTrace();
 		}
 //		
-		log.debug("끝");
+
 //		
 		return null;
 //		
