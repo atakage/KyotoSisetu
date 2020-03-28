@@ -74,7 +74,7 @@ window.yconnectInit = function() {
         },
         authorization: {
             clientId: "dj0zaiZpPXFSRVM1WlhyWGZ2UCZzPWNvbnN1bWVyc2VjcmV0Jng9MDk-",
-            redirectUri: "http://localhost:8084/kyoto/",
+            redirectUri: "http://localhost:8084/kyoto/member/yahootoken",
             scope: "openid email profile address",
             state: "123",
             nonce: "123",

@@ -1,5 +1,9 @@
 package com.jgm.kyoto.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jgm.kyoto.domain.UserVO;
 import com.jgm.kyoto.service.MemberService;
 
+import jp.co.yahoo.yconnect.YConnectExplicit;
+import jp.co.yahoo.yconnect.core.oauth2.AuthorizationException;
+import jp.co.yahoo.yconnect.core.oauth2.TokenException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +28,64 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
 	private final MemberService memberService;
+	
+	
+	private final String yahooClientId = "dj0zaiZpPXFSRVM1WlhyWGZ2UCZzPWNvbnN1bWVyc2VjcmV0Jng9MDk-";
+	private final String yahooClientSecret = "e2a9a9af53874d2ec95e194c8331365681cc045c";
+	private final String redirectURI = "http://localhost:8084/kyoto/member/yahootoken";
+	
+	
+	@RequestMapping(value="/yahootoken", method=RequestMethod.GET)
+	public String yahooToken( @RequestParam("state") String state,
+			HttpServletRequest httpServletRequest) throws URISyntaxException {
+		
+		
+		
+		//String state = "123";
+		//String nonce = "123";
+		
+		
+		String fullURI = httpServletRequest.getRequestURL().toString()+"?"+httpServletRequest.getQueryString();
+		URI requestURI = new URI(fullURI);
+	YConnectExplicit yconnect = new YConnectExplicit();
+	
+	
+		try {
+			
+			
+			if(yconnect.hasAuthorizationCode(requestURI)){
+				log.debug("pass");
+				String code = yconnect.getAuthorizationCode(state);
+				yconnect.requestToken(code, yahooClientId, yahooClientSecret, redirectURI);
+				String accessTokenString = yconnect.getAccessToken();
+				String refreshTokent = yconnect.getRefreshToken();
+				String idTokenString = yconnect.getIdToken();
+				log.debug("pass2");
+				
+				}
+		} catch (AuthorizationException e) {
+			// TODO Auto-generated catch block
+			log.debug("에러1");
+			e.printStackTrace();
+		} catch (TokenException e) {
+			// TODO Auto-generated catch block
+			log.debug("에러2");
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.debug("에러3");
+			e.printStackTrace();
+		}
+//		
+		log.debug("끝");
+//		
+		return null;
+//		
+	}
+	
+	
+	
+	
 	
 	
 	
