@@ -64,7 +64,8 @@
 <script type="text/javascript">
 window.yconnectInit = function() {
     YAHOO.JP.yconnect.Authorization.init({
-        button: {
+        button: {    // ボタンに関しては下記URLを参考に設定してください
+                     // https://developer.yahoo.co.jp/yconnect/loginbuttons.html
             format: "image",
             type: "d",
             textType:"a",
@@ -73,31 +74,29 @@ window.yconnectInit = function() {
             className: "yconnectLogin"
         },
         authorization: {
-            clientId: "dj0zaiZpPXFSRVM1WlhyWGZ2UCZzPWNvbnN1bWVyc2VjcmV0Jng9MDk-",
-            redirectUri: "http://localhost:8084/kyoto/member/yahootoken",
+            clientId: "dj00aiZpPXdKZzJNc1VVWmZoTSZzPWNvbnN1bWVyc2VjcmV0Jng9YjY-",    // 登録したClient IDを入力してください
+            redirectUri: "http://localhost:8084/kyoto/member/yahootoken", // 本スクリプトを埋め込むページのURLを入力してください
             scope: "openid email profile address",
+            // Authorization Codeフローの場合はresponseType, state, nonceパラメーターは必須です,
+            responseType: "code",
             state: "123",
             nonce: "123",
             windowWidth: "500",
             windowHeight: "400"
         },
         onError: function(res) {
-
-        
-            
             // エラー発生時のコールバック関数
-            alert(JSON.stringify(res))
+            alert(res)
         },
         onCancel: function(res) {
             // 同意キャンセルされた時のコールバック関数
-             alert(JSON.stringify(res))
             alert(res)
         }
     });
 };
 (function(){
 var fs = document.getElementsByTagName("script")[0], s = document.createElement("script");
-s.setAttribute("src", "https://s.yimg.jp/images/login/yconnect/auth/1.0.3/auth-min.js");
+s.setAttribute("src", "https://s.yimg.jp/images/login/yconnect/auth/2.0.3/auth-min.js");
 fs.parentNode.insertBefore(s, fs);
 })();
 </script>

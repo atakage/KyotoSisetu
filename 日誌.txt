@@ -100,3 +100,19 @@ hierarchical queryで作る返信コメントはあとですることにした
 
 *未解決: footer追加, 詳細ページcssバグ問題, SPARQLを活用した施設検索＋paginationV2の追加, pagination block bug,
 	返信バグ
+
+
+
+-----------------------------------------------------2020-03-29↓
+
+
+java sdkが含まれるヤフー連携v1で個人情報を取り出すのに成功したがv1がいずれクローズになることがわかった
+それで仕方なく結構難しそうなv2で舵を切った
+現在oauth2.0のヤフー連携作業中。。。
+
+
+
+
+
+*未解決: footer追加, 詳細ページcssバグ問題, SPARQLを活用した施設検索＋paginationV2の追加, pagination block bug,
+	返信バグ

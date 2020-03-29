@@ -1,5 +1,6 @@
 package com.jgm.kyoto.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -31,86 +32,28 @@ public class MemberController {
 
 	private final MemberService memberService;
 	
-	
-	private final String yahooClientId = "dj0zaiZpPXFSRVM1WlhyWGZ2UCZzPWNvbnN1bWVyc2VjcmV0Jng9MDk-";
-	private final String yahooClientSecret = "e2a9a9af53874d2ec95e194c8331365681cc045c";
-	private final String redirectURI = "http://localhost:8084/kyoto/member/yahootoken";
-	
-	private final String nonce = "123";
-	@RequestMapping(value="/yahootoken", method=RequestMethod.GET)
-	public String yahooToken( @RequestParam("state") String state,
-			HttpServletRequest httpServletRequest) throws URISyntaxException {
-		
-		
-		
-		//String state = "123";
-		//String nonce = "123";
-		
-		
-		String fullURI = httpServletRequest.getRequestURL().toString()+"?"+httpServletRequest.getQueryString();
-		URI requestURI = new URI(fullURI);
-	YConnectExplicit yconnect = new YConnectExplicit();
-	
-	
-		try {
-			
-			
-			if(yconnect.hasAuthorizationCode(requestURI)) {
-	
-				
-				String code = yconnect.getAuthorizationCode(state);
-				log.debug("code:"+code.toString());
-				yconnect.requestToken(code, yahooClientId, yahooClientSecret, redirectURI);
-				String accessTokenString = yconnect.getAccessToken();
-				log.debug("accessTokenString:"+accessTokenString.toString());
-				String refreshTokent = yconnect.getRefreshToken();
-				log.debug("refreshTokent:"+ refreshTokent.toString() );
-				String idTokenString = yconnect.getIdToken();
-				log.debug("idTokenString:"+ idTokenString.toString() );
-				
-				
-				
-				
-				if(yconnect.verifyIdToken(nonce, yahooClientId, yahooClientSecret, idTokenString)) {
-					
-					
-					IdTokenObject idTokenObject = yconnect.decodeIdToken(idTokenString);
-					log.debug("idTokenObject:"+ idTokenObject.toString() );
-					
-					
-					yconnect.requestUserInfo(accessTokenString);
-					UserInfoObject userInfoObject = yconnect.getUserInfoObject();
-					
-					log.debug("userobj:"+userInfoObject.toString());
-					
-				}else {
-					
-					log.debug("fail");
-					
-				}
-				
-				
-				
-				
-				}
-		} catch (AuthorizationException e) {
-			// TODO Auto-generated catch block
-			
-			e.printStackTrace();
-		} catch (TokenException e) {
-			// TODO Auto-generated catch block
-	
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-	
-			e.printStackTrace();
-		}
-//		
 
-//		
+	
+	
+	//dj00aiZpPXdKZzJNc1VVWmZoTSZzPWNvbnN1bWVyc2VjcmV0Jng9YjY-
+
+	//t6TiyjaBHbadxE80BQJzTMKwmi2jIJAJpQWUrXVb
+	
+	
+	
+	
+	@RequestMapping(value="/yahootoken", method=RequestMethod.GET)
+	public String yahooToken( @RequestParam("state") String state, @RequestParam("code") String code,
+			HttpServletRequest httpServletRequest) throws URISyntaxException, UnsupportedEncodingException {
+
+		
+		log.debug(state+code);
+		
+		memberService.getToken(state, code);
+		
+		
 		return null;
-//		
+		
 	}
 	
 	
