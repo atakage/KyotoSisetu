@@ -6,19 +6,29 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.jgm.kyoto.domain.UserVO;
 import com.jgm.kyoto.persistence.MemberDao;
+import com.nimbusds.jose.JWEHeader;
 
+import jp.co.yahoo.yconnect.core.oidc.JWTVerification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -85,7 +95,7 @@ public class MemberService {
 		
 	}
 
-	public void getToken(String state, String code) throws UnsupportedEncodingException {
+	public JSONObject getToken(String state, String code) throws UnsupportedEncodingException, ParseException {
 		// TODO Auto-generated method stub
 		
 	
@@ -156,6 +166,16 @@ public class MemberService {
 			log.debug("responsecode" + responseCode+"");
 			log.debug("httpbody:" + response.toString());
 			
+			
+			
+			
+		JSONParser jsonParser = new JSONParser();
+		JSONObject tokenJSON = (JSONObject) jsonParser.parse(response.toString());
+			
+	
+		return tokenJSON;
+			
+			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,6 +184,134 @@ public class MemberService {
 			e.printStackTrace();
 		}
 		
+		
+		return null;
+	}
+
+	public JSONObject getJwks(JSONObject tokenJSON) throws ParseException {
+		// TODO Auto-generated method stub
+		
+		log.debug("verifytoken start");
+		
+		try {
+			URL url = new URL("https://auth.login.yahoo.co.jp/yconnect/v2/jwks");
+			HttpURLConnection httpsCon = (HttpURLConnection) url.openConnection();
+			
+			httpsCon.setRequestMethod("GET");
+			int responseCode = httpsCon.getResponseCode();
+			BufferedReader br = new BufferedReader(new InputStreamReader(httpsCon.getInputStream()));
+			
+			String inputSTR;
+			StringBuffer response = new StringBuffer();
+			
+			while((inputSTR = br.readLine()) != null) {
+				
+				response.append(inputSTR);
+			}
+			br.close();
+			
+			log.debug("responsecode:" + responseCode);
+			log.debug("httpbody:" + response.toString());
+			
+			
+			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject jwksJSON = (JSONObject) jsonParser.parse(response.toString());
+				
+		
+			return jwksJSON;
+			
+			
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return null;
+	}
+
+	public void verifyIdToken(JSONObject tokenJSON, JSONObject jwksJSON, String sub) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		
+	
+	}
+
+	public String getSub(JSONObject tokenJSON) {
+		// TODO Auto-generated method stub
+		
+		log.debug("start getsub");
+		//log.debug(tokenJSON.get("access_token").toString());
+		try {
+			URL url = new URL(" https://userinfo.yahooapis.jp/yconnect/v2/attribute");
+			HttpsURLConnection httpsCon = (HttpsURLConnection) url.openConnection();
+			
+			httpsCon.setRequestMethod("GET");
+			httpsCon.setRequestProperty("Authorization", "Bearer "+tokenJSON.get("access_token").toString());
+			httpsCon.setDoOutput(true);
+			
+			
+			int responseCode = httpsCon.getResponseCode();
+			log.debug("responsecode" + responseCode+"");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(httpsCon.getInputStream()));
+			
+			
+			
+			String inputSTR;
+			StringBuffer response = new StringBuffer();
+			
+			while((inputSTR = br.readLine()) != null) {
+			
+				log.debug(inputSTR);
+				response.append(inputSTR);
+			}
+			
+			br.close();
+			
+			
+			
+			log.debug("httpbody:" + response.toString());
+			
+			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject userInfoJSON = (JSONObject) jsonParser.parse(response.toString());
+			
+			String sub = userInfoJSON.get("sub").toString();
+			
+			log.debug("sub:" + sub);
+			
+			return sub;
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		return null;
 	}
 	
 	

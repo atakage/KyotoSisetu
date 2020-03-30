@@ -7,6 +7,8 @@ import java.net.URISyntaxException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,13 +46,22 @@ public class MemberController {
 	
 	@RequestMapping(value="/yahootoken", method=RequestMethod.GET)
 	public String yahooToken( @RequestParam("state") String state, @RequestParam("code") String code,
-			HttpServletRequest httpServletRequest) throws URISyntaxException, UnsupportedEncodingException {
+			HttpServletRequest httpServletRequest) throws URISyntaxException, UnsupportedEncodingException, ParseException {
 
 		
 		log.debug(state+code);
 		
-		memberService.getToken(state, code);
 		
+		//レスポンス: access_token, token_type, refresh_token, expires_in, id_token
+		JSONObject tokenJSON = memberService.getToken(state, code);
+		// IDToken検証で用いるユーザー識別子を返却
+		String sub  = memberService.getSub(tokenJSON);
+		
+		//ID TokenのSignatureを検証するためのPublic Keyのmodulusとexponentを返却
+		JSONObject jwksJSON  = memberService.getJwks(tokenJSON);
+		
+		
+		memberService.verifyIdToken(tokenJSON, jwksJSON,sub);
 		
 		return null;
 		
