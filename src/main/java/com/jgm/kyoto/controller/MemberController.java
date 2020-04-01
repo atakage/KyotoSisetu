@@ -1,5 +1,6 @@
 package com.jgm.kyoto.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -46,7 +47,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/yahootoken", method=RequestMethod.GET)
 	public String yahooToken( @RequestParam("state") String state, @RequestParam("code") String code,
-			HttpServletRequest httpServletRequest) throws URISyntaxException, UnsupportedEncodingException, ParseException {
+			HttpServletRequest httpServletRequest) throws URISyntaxException, ParseException, IOException {
 
 		
 		log.debug(state+code);

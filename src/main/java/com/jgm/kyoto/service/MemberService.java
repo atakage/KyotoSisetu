@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -12,9 +11,12 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Base64;
 import java.util.Base64.Encoder;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.apache.jena.atlas.json.JSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,13 +24,12 @@ import org.json.simple.parser.ParseException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.jgm.kyoto.domain.UserVO;
 import com.jgm.kyoto.persistence.MemberDao;
-import com.nimbusds.jose.JWEHeader;
 
-import jp.co.yahoo.yconnect.core.oidc.JWTVerification;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -238,13 +239,84 @@ public class MemberService {
 		return null;
 	}
 
-	public void verifyIdToken(JSONObject tokenJSON, JSONObject jwksJSON, String sub) {
+	public void verifyIdToken(JSONObject tokenJSON, JSONObject jwksJSON, String sub) throws ParseException, IOException {
 		// TODO Auto-generated method stub
 		
 		
 		
 		
+		HashMap<String, Object> headers = new HashMap<String,Object>();
+		
+		
+		headers.put("typ", "JWT");
+		headers.put("alg", "RS256");
+		headers.put("kid", "0cc175b9c0f1b6a831c399e269772661"); // 後で修正
+		
+		
+		HashMap<String, Object> payloads = new HashMap<String, Object>();
+		
+		
+		payloads.put("iss", "https://auth.login.yahoo.co.jp/yconnect/v2");
+		payloads.put("sub", sub);
+		payloads.put("aud", "dj00aiZpPXdKZzJNc1VVWmZoTSZzPWNvbnN1bWVyc2VjcmV0Jng9YjY-");
+		
+		
+		
+		Long expiredTime = (long) (1000*60);   // 1 minute? 
+		Date exp = new Date();
+		
+		
+		log.debug(exp.getTime()+"");
+		log.debug(exp.getTime()+expiredTime+"");
+		
+		payloads.put("iat", exp.getTime());		
+		exp.setTime(exp.getTime()+expiredTime);	
+		payloads.put("exp", exp);
+		
+		
+		
+		Encoder encoder  = Base64.getEncoder();
+		String idsec = "t6TiyjaBHbadxE80BQJzTMKwmi2jIJAJpQWUrXVb";
+		byte[] target;
+
+
+		target = idsec.getBytes("UTF-8");
 	
+			
+		String secVal = encoder.encodeToString(target);
+		
+		
+		
+		
+		
+		String kid = "0cc175b9c0f1b6a831c399e269772661";
+		byte[] target2;
+
+
+		target2 = kid.getBytes("UTF-8");
+	
+			
+		String kidVal = encoder.encodeToString(target2);
+		
+		
+		
+		
+		String jwt = Jwts.builder().setHeader(headers).setClaims(payloads).signWith(SignatureAlgorithm.HS256, secVal).compact();
+
+		log.debug(jwt);
+		
+		
+		try {
+			Jwts.parser().setSigningKey(secVal).parseClaimsJws(jwt);
+			log.debug("success!!!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.debug("FAILLLLLLLLLLLLLLLLLLLLLLLL");
+			e.printStackTrace();
+		}
+	
+		
+		
 	}
 
 	public String getSub(JSONObject tokenJSON) {
