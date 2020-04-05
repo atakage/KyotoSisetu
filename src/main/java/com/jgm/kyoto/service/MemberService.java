@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import com.jgm.kyoto.domain.UserVO;
 import com.jgm.kyoto.persistence.MemberDao;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -40,7 +41,11 @@ public class MemberService {
 	
 	
 	private final MemberDao memberDao;
-
+	
+	
+	//YAHOO JP
+	private static final String CLIENT_ID = "dj00aiZpPXdKZzJNc1VVWmZoTSZzPWNvbnN1bWVyc2VjcmV0Jng9YjY-";
+	private static final String SECRET_KEY = "t6TiyjaBHbadxE80BQJzTMKwmi2jIJAJpQWUrXVb";
 	public int mailcheck(String u_id) {
 		// TODO Auto-generated method stub
 		
@@ -101,7 +106,9 @@ public class MemberService {
 		
 	
 		Encoder encoder  = Base64.getEncoder();
-		String idsec = "dj00aiZpPXdKZzJNc1VVWmZoTSZzPWNvbnN1bWVyc2VjcmV0Jng9YjY-:t6TiyjaBHbadxE80BQJzTMKwmi2jIJAJpQWUrXVb";
+		
+		// Client ID + SECRET KEY
+		String idsec = CLIENT_ID+":"+SECRET_KEY;
 		byte[] target;
 
 
@@ -127,8 +134,6 @@ public class MemberService {
 			
 			DataOutputStream dos = new DataOutputStream(httpsCon.getOutputStream());
 			String parameter = "grant_type=authorization_code" +
-					//+ "&client_id=dj00aiZpPXdKZzJNc1VVWmZoTSZzPWNvbnN1bWVyc2VjcmV0Jng9YjY-" + 
-					//"&client_secret=t6TiyjaBHbadxE80BQJzTMKwmi2jIJAJpQWUrXVb" + 
 					"&code=" + code +
 					"&redirect_uri=http://localhost:8084/kyoto/member/yahootoken";
 			dos.writeBytes(parameter);
@@ -239,10 +244,18 @@ public class MemberService {
 		return null;
 	}
 
-	public void verifyIdToken(JSONObject tokenJSON, JSONObject jwksJSON, String sub) throws ParseException, IOException {
+	public UserVO verifyIdToken(JSONObject tokenJSON, JSONObject jwksJSON, String sub) throws ParseException, IOException {
 		// TODO Auto-generated method stub
 		
 		
+		
+		JSONArray jwksArray =  (JSONArray) jwksJSON.get("keys");
+		JSONObject parsedJwks = (JSONObject) jwksArray.get(0);
+		
+		
+		String kid = parsedJwks.get("kid").toString();
+		
+
 		
 		
 		HashMap<String, Object> headers = new HashMap<String,Object>();
@@ -250,7 +263,7 @@ public class MemberService {
 		
 		headers.put("typ", "JWT");
 		headers.put("alg", "RS256");
-		headers.put("kid", "0cc175b9c0f1b6a831c399e269772661"); // 後で修正
+		headers.put("kid", kid); 
 		
 		
 		HashMap<String, Object> payloads = new HashMap<String, Object>();
@@ -258,7 +271,8 @@ public class MemberService {
 		
 		payloads.put("iss", "https://auth.login.yahoo.co.jp/yconnect/v2");
 		payloads.put("sub", sub);
-		payloads.put("aud", "dj00aiZpPXdKZzJNc1VVWmZoTSZzPWNvbnN1bWVyc2VjcmV0Jng9YjY-");
+		payloads.put("aud", CLIENT_ID);
+		
 		
 		
 		
@@ -276,11 +290,13 @@ public class MemberService {
 		
 		
 		Encoder encoder  = Base64.getEncoder();
-		String idsec = "t6TiyjaBHbadxE80BQJzTMKwmi2jIJAJpQWUrXVb";
+		
+
+		String sec = SECRET_KEY;
 		byte[] target;
 
 
-		target = idsec.getBytes("UTF-8");
+		target = sec.getBytes("UTF-8");
 	
 			
 		String secVal = encoder.encodeToString(target);
@@ -289,15 +305,15 @@ public class MemberService {
 		
 		
 		
-		String kid = "0cc175b9c0f1b6a831c399e269772661";
-		byte[] target2;
-
-
-		target2 = kid.getBytes("UTF-8");
-	
-			
-		String kidVal = encoder.encodeToString(target2);
-		
+//		
+//		byte[] target2;
+//
+//
+//		target2 = kid.getBytes("UTF-8");
+//	
+//			
+//		String kidVal = encoder.encodeToString(target2);
+//		
 		
 		
 		
@@ -307,19 +323,36 @@ public class MemberService {
 		
 		
 		try {
-			Jwts.parser().setSigningKey(secVal).parseClaimsJws(jwt);
-			log.debug("success!!!");
+			
+			//検証成功？
+			Claims claims = Jwts.parser().setSigningKey(secVal).parseClaimsJws(jwt).getBody();
+			
+
+			
+			 JSONObject UserInfo= this.getSub(tokenJSON);
+			 
+			 String u_id = UserInfo.get("sub").toString();
+			 String u_nickname = UserInfo.get("nickname").toString();
+			
+			
+			
+			UserVO userVO = UserVO.builder().u_id(u_id).u_nickname(u_nickname).build();
+			
+			log.debug(userVO.toString());
+			return userVO;
+			
+			
 		} catch (Exception e) {
 			// TODO: handle exception
-			log.debug("FAILLLLLLLLLLLLLLLLLLLLLLLL");
+			log.debug("Check FAIL");
 			e.printStackTrace();
 		}
 	
-		
+		return null;
 		
 	}
 
-	public String getSub(JSONObject tokenJSON) {
+	public JSONObject getSub(JSONObject tokenJSON) {
 		// TODO Auto-generated method stub
 		
 		log.debug("start getsub");
@@ -359,11 +392,11 @@ public class MemberService {
 			JSONParser jsonParser = new JSONParser();
 			JSONObject userInfoJSON = (JSONObject) jsonParser.parse(response.toString());
 			
-			String sub = userInfoJSON.get("sub").toString();
+			//String sub = userInfoJSON.get("sub").toString();
 			
-			log.debug("sub:" + sub);
 			
-			return sub;
+			
+			return userInfoJSON;
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

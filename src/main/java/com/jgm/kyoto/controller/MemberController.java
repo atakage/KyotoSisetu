@@ -1,8 +1,6 @@
 package com.jgm.kyoto.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,19 +9,16 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jgm.kyoto.domain.UserVO;
 import com.jgm.kyoto.service.MemberService;
 
-import jp.co.yahoo.yconnect.YConnectExplicit;
-import jp.co.yahoo.yconnect.core.oauth2.AuthorizationException;
-import jp.co.yahoo.yconnect.core.oauth2.TokenException;
-import jp.co.yahoo.yconnect.core.oidc.IdTokenObject;
-import jp.co.yahoo.yconnect.core.oidc.UserInfoObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,8 +41,8 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="/yahootoken", method=RequestMethod.GET)
-	public String yahooToken( @RequestParam("state") String state, @RequestParam("code") String code,
-			HttpServletRequest httpServletRequest) throws URISyntaxException, ParseException, IOException {
+	public String yahooToken( @RequestParam("state") String state, @RequestParam("code") String code, Model model
+			) throws URISyntaxException, ParseException, IOException {
 
 		
 		log.debug(state+code);
@@ -55,16 +50,38 @@ public class MemberController {
 		
 		//レスポンス: access_token, token_type, refresh_token, expires_in, id_token
 		JSONObject tokenJSON = memberService.getToken(state, code);
-		// IDToken検証で用いるユーザー識別子を返却
-		String sub  = memberService.getSub(tokenJSON);
+	
+		//ユーザー情報中にあるユーザー識別子(sub)を得る
+		JSONObject userInfoJSON  = memberService.getSub(tokenJSON);
 		
 		//ID TokenのSignatureを検証するためのPublic Keyのmodulusとexponentを返却
 		JSONObject jwksJSON  = memberService.getJwks(tokenJSON);
 		
+		// u_id(ユーザー識別子), u_nickname(name)だけ取得
+		UserVO userVO= memberService.verifyIdToken(tokenJSON, jwksJSON,userInfoJSON.get("sub").toString());
 		
-		memberService.verifyIdToken(tokenJSON, jwksJSON,sub);
 		
-		return null;
+		
+		// 最終ログイン前u_nickname重複チェック
+		int ret = memberService.nickcheck(userVO.getU_nickname());
+		
+		
+		
+		// retutrn jsp -> pathが変わらない
+		if(ret > 0) {
+			
+			log.debug("find nickname");
+			model.addAttribute("yahooLoginMSG", "本アカウントの名前はこのサイトで既に使用されています\nYAHOO名前を変更した後再ログインしてください");
+			
+			return "login_page";
+		}else {
+			
+			return null;
+		}
+		
+		
+		
+		
 		
 	}
 	
@@ -86,6 +103,9 @@ public class MemberController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(){
+		
+		
+		//model.addAttribute("yahooLoginMSG", yahooLoginMSG);
 		
 		return "login_page";
 		

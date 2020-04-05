@@ -95,8 +95,10 @@ window.yconnectInit = function() {
     });
 };
 (function(){
+
+	document.cookie = "crossCookie=bar; SameSite=none; Secure"
 var fs = document.getElementsByTagName("script")[0], s = document.createElement("script");
-s.setAttribute("src", "https://s.yimg.jp/images/login/yconnect/auth/2.0.3/auth-min.js");
+s.setAttribute("src", "http://s.yimg.jp/images/login/yconnect/auth/2.0.3/auth-min.js");
 fs.parentNode.insertBefore(s, fs);
 })();
 </script>
@@ -114,8 +116,14 @@ fs.parentNode.insertBefore(s, fs);
 $(function(){
 
 
-
 	
+
+
+//	if(${yahooLoginMSG} != null){
+
+//		alert(${yahooLoginMSG})
+
+//		}
 
 
 
