@@ -1,0 +1,106 @@
+<c:when test="${PAGINATIONBAR == 'ALL'}">
+
+<a href="${rootPath}/?curPage=1">&laquo;</a>
+
+
+<c:if test="${curPage != 1 }">
+<a  href="${rootPath}/?curPage=${prevPage}">&lt;</a>
+</c:if>
+
+<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+
+
+<c:if test="${pageNum == curPage}">
+
+	<a class="pagiActive" href="${rootPath}/?curPage=${pageNum}">${pageNum}</a>
+
+</c:if>
+<c:if test="${pageNum != curPage}">
+
+	<a  href="${rootPath}/?curPage=${pageNum}">${pageNum}</a>
+
+</c:if>
+
+</c:forEach>
+
+<c:if test="${curPage < allEndPage}">
+<a  href="${rootPath}/?curPage=${nextPage}">&gt;</a>
+</c:if>
+
+<a href="${rootPath}/?curPage=${allEndPage}">&raquo;</a>
+
+</c:when>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<c:otherwise>
+
+
+				<a href="${rootPath}/kyoto/search?curPage=1&searchVal=${searchVal}">&laquo;</a>
+
+
+				<c:if test="${curPage != 1 }">
+					<a
+						href="${rootPath}/kyoto/search?curPage=${prevPage}&searchVal=${searchVal}">&lt;</a>
+				</c:if>
+
+				<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+
+
+					<c:if test="${pageNum == curPage}">
+
+						<a class="pagiActive"
+							href="${rootPath}/kyoto/search?curPage=${pageNum}&searchVal=${searchVal}">${pageNum}</a>
+
+					</c:if>
+					<c:if test="${pageNum != curPage}">
+
+						<a
+							href="${rootPath}/kyoto/search?curPage=${pageNum}&searchVal=${searchVal}">${pageNum}</a>
+
+					</c:if>
+
+				</c:forEach>
+
+				<c:if test="${curPage < allEndPage}">
+					<a
+						href="${rootPath}/kyoto/search?curPage=${nextPage}&searchVal=${searchVal}">&gt;</a>
+				</c:if>
+
+				<a
+					href="${rootPath}/kyoto/search?curPage=${allEndPage}&searchVal=${searchVal}">&raquo;</a>
+
+
+			</c:otherwise>
+
+
+
+
+
+infodetailbox {
+
+    display: inline-block;
+    /* position: absolute; */
+    width: 54%;
+    margin-left: 5%;
+    /* top: 55; */
+    float: right;
+
+
+}
