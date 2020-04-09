@@ -65,10 +65,10 @@
 
 .infoDetailBox{
 
-	display:inline-block;
-	position: absolute;
-	width: 50%;
+	display: inline-block;
+    width: 54%;
     margin-left: 5%;
+    float: right;
 }
 
 

@@ -81,6 +81,7 @@ li a{
 	width:90%;
 	border: 1px solid mediumpurple;
 	table-layout: fixed;
+	text-align: center;
 
 }
 
@@ -476,53 +477,73 @@ $(function(){
 <c:when test="${PAGINATIONBAR == 'ALL'}">
 
 <a href="${rootPath}/?curPage=1">&laquo;</a>
-<c:if test="${curPage-3 >= 1}">
-<a href="${rootPath}/?curPage=${curPage-3}">${curPage-3}</a>
+
+
+<c:if test="${curPage != 1 }">
+<a  href="${rootPath}/?curPage=${prevPage}">&lt;</a>
 </c:if>
-<c:if test="${curPage-2 >= 1}">
-<a href="${rootPath}/?curPage=${curPage-2}">${curPage-2}</a>
+
+<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+
+
+<c:if test="${pageNum == curPage}">
+
+	<a class="pagiActive" href="${rootPath}/?curPage=${pageNum}">${pageNum}</a>
+
 </c:if>
-<c:if test="${curPage-1 >= 1}">
-<a href="${rootPath}/?curPage=${curPage-1}">${curPage-1}</a>
+<c:if test="${pageNum != curPage}">
+
+	<a  href="${rootPath}/?curPage=${pageNum}">${pageNum}</a>
+
 </c:if>
-<a class="pagiActive" href="${rootPath}/?curPage=${curPage}">${curPage}</a>
-<c:if test="${curPage+1 <= endPage}">
-<a href="${rootPath}/?curPage=${curPage+1}">${curPage+1}</a>
+
+</c:forEach>
+
+<c:if test="${curPage < allEndPage}">
+<a  href="${rootPath}/?curPage=${nextPage}">&gt;</a>
 </c:if>
-<c:if test="${curPage+2 <= endPage}">
-<a href="${rootPath}/?curPage=${curPage+2}">${curPage+2}</a>
-</c:if>
-<c:if test="${curPage+3 <= endPage}">
-<a href="${rootPath}/?curPage=${curPage+3}">${curPage+3}</a>
-</c:if>
-<a href="${rootPath}/?curPage=${endPage}">&raquo;</a>
+
+<a href="${rootPath}/?curPage=${allEndPage}">&raquo;</a>
 
 </c:when>
 
 <c:otherwise>
 
 
-<a href="${rootPath}/kyoto/search?curPage=1&searchVal=${searchVal}">&laquo;</a>
-<c:if test="${curPage-3 >= 1}">
-<a href="${rootPath}/kyoto/search?curPage=${curPage-3}&searchVal=${searchVal}">${curPage-3}</a>
-</c:if>
-<c:if test="${curPage-2 >= 1}">
-<a href="${rootPath}/kyoto/search?curPage=${curPage-2}&searchVal=${searchVal}">${curPage-2}</a>
-</c:if>
-<c:if test="${curPage-1 >= 1}">
-<a href="${rootPath}/kyoto/search?curPage=${curPage-1}&searchVal=${searchVal}">${curPage-1}</a>
-</c:if>
-<a class="pagiActive" href="${rootPath}/kyoto/search?curPage=${curPage}&searchVal=${searchVal}">${curPage}</a>
-<c:if test="${curPage+1 <= endPage}">
-<a href="${rootPath}/kyoto/search?curPage=${curPage+1}&searchVal=${searchVal}">${curPage+1}</a>
-</c:if>
-<c:if test="${curPage+2 <= endPage}">
-<a href="${rootPath}/kyoto/search?curPage=${curPage+2}&searchVal=${searchVal}">${curPage+2}</a>
-</c:if>
-<c:if test="${curPage+3 <= endPage}">
-<a href="${rootPath}/kyoto/search?curPage=${curPage+3}&searchVal=${searchVal}">${curPage+3}</a>
-</c:if>
-<a href="${rootPath}/kyoto/search?curPage=${endPage}&searchVal=${searchVal}">&raquo;</a>
+				<a href="${rootPath}/kyoto/search?curPage=1&searchVal=${searchVal}">&laquo;</a>
+
+
+				<c:if test="${curPage != 1 }">
+					<a
+						href="${rootPath}/kyoto/search?curPage=${prevPage}&searchVal=${searchVal}">&lt;</a>
+				</c:if>
+
+				<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
+
+
+					<c:if test="${pageNum == curPage}">
+
+						<a class="pagiActive"
+							href="${rootPath}/kyoto/search?curPage=${pageNum}&searchVal=${searchVal}">${pageNum}</a>
+
+					</c:if>
+					<c:if test="${pageNum != curPage}">
+
+						<a
+							href="${rootPath}/kyoto/search?curPage=${pageNum}&searchVal=${searchVal}">${pageNum}</a>
+
+					</c:if>
+
+				</c:forEach>
+
+				<c:if test="${curPage < allEndPage}">
+					<a
+						href="${rootPath}/kyoto/search?curPage=${nextPage}&searchVal=${searchVal}">&gt;</a>
+				</c:if>
+
+				<a
+					href="${rootPath}/kyoto/search?curPage=${allEndPage}&searchVal=${searchVal}">&raquo;</a>
+
 
 </c:otherwise>
 </c:choose>

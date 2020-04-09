@@ -55,6 +55,12 @@ public class CommentService {
 		String c_text = "<p style=\"font-size: small;color: gray;\">削除されたコメントです";
 		 commentDao.updateCText(c_number,c_text,u_id);
 
+		 
+		 if(ret < 1) {
+			 return 999999998;
+		 }
+		 
+		 
 		 return 999999999;
 	}
 

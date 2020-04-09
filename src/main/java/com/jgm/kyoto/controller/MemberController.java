@@ -41,8 +41,8 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="/yahootoken", method=RequestMethod.GET)
-	public String yahooToken( @RequestParam("state") String state, @RequestParam("code") String code, Model model
-			) throws URISyntaxException, ParseException, IOException {
+	public String yahooToken( @RequestParam("state") String state, @RequestParam("code") String code, Model model,
+		HttpSession httpSession	) throws URISyntaxException, ParseException, IOException {
 
 		
 		log.debug(state+code);
@@ -71,12 +71,18 @@ public class MemberController {
 		if(ret > 0) {
 			
 			log.debug("find nickname");
-			model.addAttribute("yahooLoginMSG", "本アカウントの名前はこのサイトで既に使用されています\nYAHOO名前を変更した後再ログインしてください");
-			
-			return "login_page";
+			return "redirect:/member/sendlogmsg";
 		}else {
 			
-			return null;
+			
+			if(userVO.getU_nickname().trim().length() > 8) {
+				
+				return "redirect:/member/sendlogmsg2";
+			}
+			
+			log.debug("yahoologin userVO: "+ userVO.getU_id());
+			httpSession.setAttribute("USERSESSION", userVO);
+			return "redirect:/";
 		}
 		
 		
@@ -87,6 +93,24 @@ public class MemberController {
 	
 	
 	
+	@RequestMapping(value="/sendlogmsg", method = RequestMethod.GET)
+	public String sendLogMSG(Model model) {
+		
+		model.addAttribute("yahooLogMSG", "findnick");
+		
+		return "login_page";
+		
+	}
+	
+	
+	@RequestMapping(value="/sendlogmsg2", method = RequestMethod.GET)
+	public String sendLogMSG2(Model model) {
+		
+		model.addAttribute("yahooLogMSG", "nicklength");
+		
+		return "login_page";
+		
+	}
 	
 	
 	

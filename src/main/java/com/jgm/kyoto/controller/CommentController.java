@@ -58,8 +58,13 @@ public class CommentController {
 
 		UserVO userVO = (UserVO) httpSession.getAttribute("USERSESSION");
 		
+		
+		log.debug("insert userVO: "+ userVO.getU_id() );
+		
 		commentVO.setU_id(userVO.getU_id());
 		commentVO.setU_nickname(userVO.getU_nickname());
+		
+		log.debug("insert commentVO: "+ commentVO.toString() );
 		
 		int ret = commentService.insert(commentVO);
 		
@@ -121,6 +126,8 @@ public class CommentController {
 		if(ret == 999999999) {
 			
 			return "削除成功";
+		}else if(ret == 999999998) {
+			return "作成者だけ削除できます";
 		}
 		
 

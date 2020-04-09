@@ -116,14 +116,18 @@ fs.parentNode.insertBefore(s, fs);
 $(function(){
 
 
-	
+	var yahooLogMSG = $('#yahooLogMSG').val()
 
 
-//	if(${yahooLoginMSG} != null){
+	if(yahooLogMSG == 'findnick'){
 
-//		alert(${yahooLoginMSG})
+		alert('本アカウントの名前はこのサイトで既に使用されています\nYAHOO名前を変更した後再ログインしてください')
 
-//		}
+	}else if(yahooLogMSG == 'nicklength'){
+
+		alert('本サイトの名前（ニックネーム）は8文字以内に制限しています\nYAHOO名前を変更した後再ログインしてください')
+		}
+
 
 
 
@@ -177,7 +181,7 @@ $(function(){
 <body>
 
 
-
+<input id="yahooLogMSG" type="hidden" value="${yahooLogMSG}">
 
 
 <div class="joinBox">

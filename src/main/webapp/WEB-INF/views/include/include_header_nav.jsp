@@ -33,6 +33,12 @@ header{
 }
 
 
+header:hover{
+
+	cursor: pointer;
+}
+
+
 .navMenuBox{
 
 	display: block;
@@ -67,6 +73,25 @@ li a{
 
 
 </style>
+
+
+<script>
+
+$(function(){
+
+
+	$(document).on('click','header',function(){
+
+
+		document.location.href='${rootPath}/'
+
+		
+		})
+		
+	
+})
+
+</script>
 
 
 

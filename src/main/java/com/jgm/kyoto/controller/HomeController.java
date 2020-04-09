@@ -50,7 +50,10 @@ public class HomeController {
 		
 		model.addAttribute("curPage", pVO.getCurPage());
 		model.addAttribute("startPage", pVO.getStartPage());
-		model.addAttribute("endPage", pVO.getAllPageCnt());
+		model.addAttribute("endPage", pVO.getEndPage());
+		model.addAttribute("allEndPage", pVO.getAllPageCnt());
+		model.addAttribute("prevPage", pVO.getPrevPage());
+		model.addAttribute("nextPage", pVO.getNextPage());
 		model.addAttribute("KYOTOLIST", resArray);
 		
 		

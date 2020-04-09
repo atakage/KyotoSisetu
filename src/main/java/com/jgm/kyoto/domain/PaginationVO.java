@@ -19,7 +19,7 @@ public class PaginationVO {
 	private int pageSize = 10;
 	
 	// １ブロック（range)にページの数
-	private int rangeSize = 7;
+	private int rangeSize = 5;
 	
 	private int curPage = 1;
 	private int curRange = 1;
