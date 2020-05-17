@@ -62,11 +62,14 @@
 
 $(function(){
 
+
+	
+	
 		var hensinSW = 'off'
 
 
 			
-		$('.deleteButton').unbind("click").bind('click',function(){
+		$('.deleteButton').click(function(){
 			if(!confirm('削除しますか？'))return false
 				
 				var c_number = $(this).siblings('#c_number').val()
@@ -100,8 +103,8 @@ $(function(){
 		
 		
 		
-		$('.hensinButton').unbind("click").bind('click',function(){
-
+		$('.hensinButton').click(function(){
+//$(document).on('click','.hensinButton',function(){
 			
 			
 			var hensinDDSW = $(this).siblings('#hensinSW').val()
@@ -120,9 +123,9 @@ $(function(){
 					success:function(result){
 						
 						// use variable in jqeury selector 
-						
-					
 						$('.'+divAddr).html(result)
+							
+						
 				
 						},error:function(){
 							alert("サーバーエラー")
@@ -133,6 +136,8 @@ $(function(){
 					$(this).siblings('#hensinSW').attr('value', 'on')
 					$(this).text('返信▼')
 					$(this).siblings('#createCmt2SW').attr('value', 'off')
+
+					
 			
 				}else if(hensinDDSW == 'on' && createCmt2SW == 'off'){
 					var divAddr = 'commenthenSinEntrance'
@@ -190,12 +195,12 @@ $(function(){
 <c:forEach items="${COMMENTLIST}" var="cmtList" >
 
 
-<div style="padding: 3%;">
+<div class="commentBoxDiv" style="padding: 3%;">
 			
 			
 			<div class="nicknameBox"><b>${cmtList.u_nickname}</b>さん</div><div class="dateBox" style="display: inline-block; float:right;">${cmtList.c_date}</div>
 			<div class="textBox" style="word-break:break-all; margin:10; white-space: pre;">${cmtList.c_text}</div>
-			<div style="width: 100%;float: right; margin-top: 3%">
+			<div class="btnBoxDiv" style="width: 100%;float: right; margin-top: 3%">
 			
 			
 			<button class="hensinButton" style="float:left;">返信▲</button>
@@ -208,7 +213,7 @@ $(function(){
 			
 			<div class="commentLinear"></div>
 			
-			<div class="commenthenSinEntrance${cmtList.c_number}">
+			<div class="commenthenSinEntrance${cmtList.c_number} commenthenSinEntranceEX">
 			
 
 			

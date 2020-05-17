@@ -125,4 +125,4 @@ java sdkが含まれるヤフー連携v1で個人情報を取り出すのに成�
 様々なバグ修正
 
 
-*未解決: footer追加,  SPARQLを活用した施設検索＋paginationV2の追加, 返信バグ
+*未解決: footer追加,  SPARQLを活用した施設検索＋paginationV2の追加, 返信数のカウントができない

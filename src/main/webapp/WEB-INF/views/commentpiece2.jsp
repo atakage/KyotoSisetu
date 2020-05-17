@@ -68,6 +68,10 @@
     background-color: rgba(147, 112, 219, 0.5);
 	border-color:rgba(147, 112, 219, 0.5);
 	}
+	
+.subCommentBoxDiv{
+	background-color: rgba(255, 255, 255, 0.1);
+}	
 
 </style>
 
@@ -82,7 +86,8 @@ $(function(){
 
 	
 	
-$(document).on('click','.deleteButton2',function(){
+//$(document).on('click','.deleteButton2',function(){
+$('.deleteButton2').click(function(){	
 
 	if(!confirm('削除しますか？'))return false
 		
@@ -129,8 +134,9 @@ $(document).on('click','.deleteButton2',function(){
 
 
 
-$(document).on('click','.insertHensinButton',function(){
+//$(document).on('click','.insertHensinButton',function(){
 
+$('.insertHensinButton').click(function(){
 
 	var c_text = $(this).siblings('#c_text2').val()	
 	var c_f_id = $('#c_f_id').val()
@@ -150,7 +156,8 @@ $(document).on('click','.insertHensinButton',function(){
 
 			
 			$('.'+divAddr).html(result)
-			
+			var commentLength = $('.subCommentBoxDiv').length
+			$('.subCommentNumText').text(commentLength)
 
 			
 
@@ -188,7 +195,7 @@ $(document).on('click','.insertHensinButton',function(){
 <c:forEach items="${COMMENTLIST2}" var="cmtList2" >
 
 
-<div style="padding: 3%; padding-left:10%">
+<div class="subCommentBoxDiv" style="padding: 3%; padding-left:10%">
 			
 			
 			<div class="nicknameBox"><b>${cmtList2.u_nickname}</b>さん</div><div class="dateBox" style="display: inline-block; float:right;">${cmtList2.c_date}</div>

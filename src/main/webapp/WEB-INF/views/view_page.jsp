@@ -301,6 +301,13 @@ L.marker([latitude,longitude],{title:name}).addTo(mymap)
 $(function(){
 
 
+
+	var commentLength = $('.commentBoxDiv').length
+	$('.commentNumText').text(commentLength)
+	
+
+	
+
 	$('.insertButton').click(function(){
 
 
@@ -320,6 +327,8 @@ $(function(){
 			success:function(result){
 
 				$('.cmtEntranceDiv').html(result)
+				var commentLength = $('.commentBoxDiv').length
+				$('.commentNumText').text(commentLength)
 
 				}, error:function(){
 
@@ -446,7 +455,7 @@ $(function(){
 	
 	<div class="commentBox">
 	
-		<div style="margin-top: 4%; font-size: x-large; font-weight: bold;">コメント</div>
+		<div style="margin-top: 4%; font-size: x-large; font-weight: bold;">コメント(<a class="commentNumText"></a>)</div>
 	
 	
 			
